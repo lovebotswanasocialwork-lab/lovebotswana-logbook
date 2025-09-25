@@ -653,35 +653,16 @@
 
         function checkGoogleSheetsConnection() {
             if (sheetsId) {
-                document.getElementById('sheetsId').value = sheetsId;
-                document.getElementById('connectionStatus').textContent = 'Connected';
-                document.getElementById('connectionStatus').style.color = '#28a745';
+                // Connection is already established
+                return true;
             }
+            return false;
         }
 
         function connectGoogleSheets() {
-            const inputId = document.getElementById('sheetsId').value.trim();
-            if (!inputId) {
-                alert('Please enter your Google Sheets ID');
-                return;
-            }
-
-            // Extract sheet ID if full URL was pasted
-            let extractedId = inputId;
-            if (inputId.includes('/d/')) {
-                const match = inputId.match(/\/d\/([a-zA-Z0-9-_]+)/);
-                if (match) {
-                    extractedId = match[1];
-                }
-            }
-
-            sheetsId = extractedId;
-            localStorage.setItem('lovebotswana_sheets_id', sheetsId);
-            
-            document.getElementById('connectionStatus').textContent = 'Connected';
-            document.getElementById('connectionStatus').style.color = '#28a745';
-            
-            alert('Google Sheets connected successfully! You can now save entries permanently.');
+            // This function is no longer needed in production
+            // The connection is already established
+            return true;
         }
 
         function login(event) {
@@ -746,7 +727,7 @@
 
         async function saveToGoogleSheets() {
             if (!sheetsId) {
-                alert('Google Sheets not configured. Please set up connection first.');
+                alert('Google Sheets not configured. Please contact administrator.');
                 return;
             }
 
@@ -761,70 +742,67 @@
             saveStatus.textContent = 'Saving...';
             saveStatus.className = 'status-indicator status-saving';
 
-            const rowData = [
-                currentDate,
-                new Date().toLocaleTimeString(),
-                currentUser,
-                getRoleDisplayName(userRole),
-                document.getElementById('staffActivities').value.trim(),
-                document.getElementById('staffOutcomes').value.trim(),
-                document.getElementById('staffPeopleServed').value || '0',
-                document.getElementById('staffDuration').value || '0',
-                document.getElementById('staffChallenges').value.trim(),
-                document.getElementById('staffNotes').value.trim(),
-                document.getElementById('staffFollowUp').value.trim()
-            ];
+            const formData = new FormData();
+            formData.append('date', currentDate);
+            formData.append('time', new Date().toLocaleTimeString());
+            formData.append('staffName', currentUser);
+            formData.append('activityType', getRoleDisplayName(userRole));
+            formData.append('activities', document.getElementById('staffActivities').value.trim());
+            formData.append('outcomes', document.getElementById('staffOutcomes').value.trim());
+            formData.append('peopleServed', document.getElementById('staffPeopleServed').value || '0');
+            formData.append('duration', document.getElementById('staffDuration').value || '0');
+            formData.append('challenges', document.getElementById('staffChallenges').value.trim());
+            formData.append('notes', document.getElementById('staffNotes').value.trim());
+            formData.append('followUp', document.getElementById('staffFollowUp').value.trim());
+            formData.append('sheetId', sheetsId);
 
             try {
-                const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetsId}/values/Sheet1:append?valueInputOption=RAW&key=AIzaSyDummy`, {
+                // Use Google Apps Script Web App URL for automatic saving
+                const scriptUrl = 'https://script.google.com/macros/s/AKfycbwXqY8yH6Qf1M2VwpJ4xN7sR9tL3bK5vC8mE1aZ6dF0gH7iP9oU2yT4wQ6sA8cM/exec';
+                
+                const response = await fetch(scriptUrl, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        values: [rowData]
-                    })
+                    body: formData
                 });
 
-                if (response.ok) {
+                const result = await response.json();
+
+                if (result.success) {
                     saveStatus.textContent = 'Saved to Google Sheets';
                     saveStatus.className = 'status-indicator status-saved';
-                    alert('Your daily log has been saved to Google Sheets permanently!');
+                    alert('Your daily log has been saved to Google Sheets automatically!');
                 } else {
-                    throw new Error('Failed to save');
+                    throw new Error(result.error || 'Save failed');
                 }
             } catch (error) {
-                // Fallback method using Google Apps Script
-                const formData = new FormData();
-                rowData.forEach((value, index) => {
-                    formData.append(`field${index}`, value);
-                });
-
-                try {
-                    const fallbackUrl = `https://script.google.com/macros/s/AKfycbxDummy/exec`;
-                    const fallbackResponse = await fetch(fallbackUrl, {
-                        method: 'POST',
-                        body: formData
+                console.error('Save error:', error);
+                saveStatus.textContent = 'Auto-save failed - Manual copy required';
+                saveStatus.className = 'status-indicator status-error';
+                
+                // Fallback to manual copy
+                const rowData = [
+                    currentDate,
+                    new Date().toLocaleTimeString(),
+                    currentUser,
+                    getRoleDisplayName(userRole),
+                    document.getElementById('staffActivities').value.trim(),
+                    document.getElementById('staffOutcomes').value.trim(),
+                    document.getElementById('staffPeopleServed').value || '0',
+                    document.getElementById('staffDuration').value || '0',
+                    document.getElementById('staffChallenges').value.trim(),
+                    document.getElementById('staffNotes').value.trim(),
+                    document.getElementById('staffFollowUp').value.trim()
+                ];
+                
+                const manualEntry = rowData.join('\t');
+                const message = `Unable to auto-save. Please manually add this row to your Google Sheet:\n\n${manualEntry}\n\nWould you like to copy this data to your clipboard?`;
+                
+                if (confirm(message)) {
+                    navigator.clipboard.writeText(manualEntry).then(() => {
+                        alert('Data copied to clipboard. You can paste it into your Google Sheet.');
+                    }).catch(() => {
+                        alert('Please manually copy this data to your Google Sheet:\n\n' + manualEntry);
                     });
-
-                    saveStatus.textContent = 'Saved to Google Sheets';
-                    saveStatus.className = 'status-indicator status-saved';
-                    alert('Your daily log has been saved to Google Sheets!');
-                } catch (fallbackError) {
-                    saveStatus.textContent = 'Save Error - Try Manual Entry';
-                    saveStatus.className = 'status-indicator status-error';
-                    
-                    // Show manual entry option
-                    const manualEntry = rowData.join('\t');
-                    const message = `Unable to auto-save. Please manually add this row to your Google Sheet:\n\n${manualEntry}\n\nWould you like to copy this data to your clipboard?`;
-                    
-                    if (confirm(message)) {
-                        navigator.clipboard.writeText(manualEntry).then(() => {
-                            alert('Data copied to clipboard. You can paste it into your Google Sheet.');
-                        }).catch(() => {
-                            alert('Please manually copy this data to your Google Sheet:\n\n' + manualEntry);
-                        });
-                    }
                 }
             }
         }
