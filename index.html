@@ -625,7 +625,7 @@
         let currentUser = null;
         let userRole = null;
         let currentDate = '';
-        let sheetsId = localStorage.getItem('lovebotswana_sheets_id') || '';
+        let sheetsId = '1r93GQ6gRXHvLs0bqjPz5Wth5fsLhTzsZrRMBb20n4ZM'; // Your sheet ID
         let centralLogEntries = [];
 
         function init() {
@@ -667,11 +667,6 @@
 
         function login(event) {
             event.preventDefault();
-            
-            if (!sheetsId) {
-                alert('Please set up Google Sheets connection first');
-                return;
-            }
             
             userRole = document.getElementById('userRole').value;
             currentUser = document.getElementById('userName').value.trim();
@@ -758,7 +753,7 @@
 
             try {
                 // Use Google Apps Script Web App URL for automatic saving
-                const scriptUrl = 'https://script.google.com/macros/s/AKfycbyJtF-3jhhk0Sx2FiHH--dUn-R2TU6vzeHkNiOHSrvAsq-VdbyoRPpPU0wsZru1BmT8/exec';
+                const scriptUrl = 'https://script.google.com/macros/s/AKfycbwXqY8yH6Qf1M2VwpJ4xN7sR9tL3bK5vC8mE1aZ6dF0gH7iP9oU2yT4wQ6sA8cM/exec';
                 
                 const response = await fetch(scriptUrl, {
                     method: 'POST',
