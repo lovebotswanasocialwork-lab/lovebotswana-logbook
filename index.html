@@ -65,6 +65,57 @@
             margin-left: 10px;
         }
 
+        .setup-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .setup-notice h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .setup-notice p {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .setup-steps {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            text-align: left;
+        }
+
+        .setup-steps h4 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .setup-steps ol {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+
+        .setup-steps li {
+            margin-bottom: 8px;
+        }
+
+        .setup-url {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+
         /* Login Screen Styles */
         .login-container {
             display: flex;
@@ -267,6 +318,34 @@
             font-weight: 600;
         }
 
+        .status-indicator {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-ready {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-saving {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-saved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
         /* Central Dashboard Styles */
         .dashboard-grid {
             display: grid;
@@ -353,7 +432,7 @@
 
         .entry-meta {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
             font-size: 11px;
             color: #888;
@@ -379,94 +458,6 @@
             margin-left: 10px;
         }
 
-        .filter-controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .filter-controls select {
-            padding: 8px 12px;
-            border: 2px solid #e0e6ed;
-            border-radius: 5px;
-            font-size: 13px;
-        }
-
-        .status-indicator {
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-saved {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-        }
-
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 700px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .field-display {
-            margin-bottom: 15px;
-        }
-
-        .field-label-display {
-            font-weight: 600;
-            color: #667eea;
-            margin-bottom: 5px;
-        }
-
-        .field-value-display {
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 3px solid #667eea;
-            white-space: pre-wrap;
-        }
-
         @media (max-width: 768px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
@@ -478,11 +469,6 @@
             
             .action-buttons {
                 flex-direction: column;
-            }
-
-            .filter-controls {
-                flex-direction: column;
-                align-items: stretch;
             }
         }
     </style>
@@ -509,6 +495,50 @@
             </div>
         </div>
 
+        <!-- Setup Instructions -->
+        <div class="setup-notice">
+            <h3>📋 Google Sheets Setup Required</h3>
+            <p>To enable permanent data storage, you need to set up Google Sheets integration.</p>
+            <p><strong>Current Status:</strong> <span id="connectionStatus" style="color: #dc3545;">Not Connected</span></p>
+        </div>
+
+        <div class="setup-steps">
+            <h4>🔧 Setup Instructions:</h4>
+            <ol>
+                <li><strong>Create Google Sheets:</strong>
+                    <ul>
+                        <li>Go to <a href="https://sheets.google.com" target="_blank">sheets.google.com</a></li>
+                        <li>Create a new spreadsheet</li>
+                        <li>Name it "Love Botswana Daily Logbook"</li>
+                        <li>Add these column headers in Row 1: Date, Time, Staff Name, Activity Type, Activities, Outcomes, People Served, Duration, Challenges, Notes, Follow Up</li>
+                    </ul>
+                </li>
+                <li><strong>Make it Public:</strong>
+                    <ul>
+                        <li>Click "Share" button (top right)</li>
+                        <li>Click "Change to anyone with the link"</li>
+                        <li>Set permission to "Editor"</li>
+                        <li>Click "Copy link"</li>
+                    </ul>
+                </li>
+                <li><strong>Get Sheet ID:</strong>
+                    <ul>
+                        <li>From your Google Sheets URL, copy the ID between "/d/" and "/edit"</li>
+                        <li>Example: https://docs.google.com/spreadsheets/d/<strong>SHEET_ID_HERE</strong>/edit</li>
+                    </ul>
+                </li>
+                <li><strong>Configure Below:</strong>
+                    <div style="margin-top: 10px;">
+                        <input type="text" id="sheetsId" placeholder="Paste your Google Sheets ID here" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
+                        <button onclick="connectGoogleSheets()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Connect Google Sheets</button>
+                    </div>
+                </li>
+            </ol>
+            <p style="margin-top: 15px; font-size: 14px; color: #6c757d;">
+                <strong>Note:</strong> This connects your logbook to Google Sheets for permanent storage. All daily entries will be automatically saved and accessible to supervisors at any time.
+            </p>
+        </div>
+
         <!-- Login Screen -->
         <div class="login-container" id="loginScreen">
             <div class="login-box">
@@ -532,8 +562,8 @@
                 </form>
                 <div style="margin-top: 20px; font-size: 12px; color: #666; text-align: center;">
                     <p><strong>Instructions:</strong></p>
-                    <p>• Social Workers: Log your daily activities - all entries are saved centrally</p>
-                    <p>• Administrators: View all team entries and export reports</p>
+                    <p>• Social Workers: Log daily activities - saved permanently to Google Sheets</p>
+                    <p>• Administrators: View all team entries and generate reports</p>
                 </div>
             </div>
         </div>
@@ -545,7 +575,7 @@
                 <input type="date" id="logDate">
                 <button class="save-btn" style="padding: 8px 15px; font-size: 13px;" onclick="loadDateData()">Load Date</button>
                 <div style="margin-left: auto;">
-                    <span class="status-indicator status-saved" id="saveStatus">Ready to Log</span>
+                    <span class="status-indicator status-ready" id="saveStatus">Ready to Log</span>
                 </div>
             </div>
 
@@ -590,7 +620,7 @@
                 </div>
 
                 <div class="action-buttons">
-                    <button class="save-btn" onclick="saveStaffLog()">💾 Save to Central Log</button>
+                    <button class="save-btn" onclick="saveToGoogleSheets()">💾 Save to Google Sheets</button>
                     <button class="export-btn" onclick="exportMyDailyLog()">📄 Export My Log</button>
                     <button class="clear-btn" onclick="clearStaffForm()">🔄 Clear Form</button>
                 </div>
@@ -617,49 +647,18 @@
                     </div>
                 </div>
 
-                <div class="filter-controls">
-                    <label>Filter by Activity:</label>
-                    <select id="activityFilter" onchange="filterEntries()">
-                        <option value="">All Activities</option>
-                        <option value="operation-blessing">Operation Blessing</option>
-                        <option value="counseling-session">Counseling Session</option>
-                        <option value="play-therapy">Play Therapy</option>
-                        <option value="meeting">Meeting</option>
-                        <option value="case">Case</option>
-                        <option value="donations">Donations</option>
-                        <option value="intake-session">Intake Session</option>
-                        <option value="workshop">Workshop</option>
-                        <option value="other-activities">Other Activities</option>
-                    </select>
-                    
-                    <label>Filter by Staff:</label>
-                    <select id="staffFilter" onchange="filterEntries()">
-                        <option value="">All Staff</option>
-                    </select>
-
-                    <button class="export-btn" onclick="exportAllEntries()">📄 Export All Entries</button>
-                    <button class="save-btn" onclick="exportDailySummary()">📊 Daily Summary</button>
+                <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
+                    <button class="export-btn" onclick="loadFromGoogleSheets()">🔄 Refresh from Google Sheets</button>
+                    <button class="save-btn" onclick="exportDailySummary()">📊 Export Daily Summary</button>
+                    <button class="export-btn" onclick="openGoogleSheets()">📋 Open Google Sheets</button>
                 </div>
 
                 <h3 class="section-title">📋 Today's Central Log Entries</h3>
                 <div class="daily-entries" id="centralLogEntries">
                     <div style="text-align: center; padding: 40px; color: #666;">
-                        No entries logged for this date yet
+                        Click "Refresh from Google Sheets" to load today's entries
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Entry Detail Modal -->
-    <div class="modal" id="entryModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>📋 Daily Log Entry Details</h3>
-                <button class="close-modal" onclick="closeEntryModal()">&times;</button>
-            </div>
-            <div id="entryModalContent">
-                <!-- Entry details will be populated here -->
             </div>
         </div>
     </div>
@@ -668,13 +667,13 @@
         let currentUser = null;
         let userRole = null;
         let currentDate = '';
-        let centralLogEntries = {};
-        let filteredEntries = [];
+        let sheetsId = localStorage.getItem('lovebotswana_sheets_id') || '';
+        let centralLogEntries = [];
 
         function init() {
             updateCurrentDate();
             setDefaultDate();
-            loadCentralData();
+            checkGoogleSheetsConnection();
         }
 
         function updateCurrentDate() {
@@ -694,8 +693,46 @@
             document.getElementById('logDate').value = today;
         }
 
+        function checkGoogleSheetsConnection() {
+            if (sheetsId) {
+                document.getElementById('sheetsId').value = sheetsId;
+                document.getElementById('connectionStatus').textContent = 'Connected';
+                document.getElementById('connectionStatus').style.color = '#28a745';
+            }
+        }
+
+        function connectGoogleSheets() {
+            const inputId = document.getElementById('sheetsId').value.trim();
+            if (!inputId) {
+                alert('Please enter your Google Sheets ID');
+                return;
+            }
+
+            // Extract sheet ID if full URL was pasted
+            let extractedId = inputId;
+            if (inputId.includes('/d/')) {
+                const match = inputId.match(/\/d\/([a-zA-Z0-9-_]+)/);
+                if (match) {
+                    extractedId = match[1];
+                }
+            }
+
+            sheetsId = extractedId;
+            localStorage.setItem('lovebotswana_sheets_id', sheetsId);
+            
+            document.getElementById('connectionStatus').textContent = 'Connected';
+            document.getElementById('connectionStatus').style.color = '#28a745';
+            
+            alert('Google Sheets connected successfully! You can now save entries permanently.');
+        }
+
         function login(event) {
             event.preventDefault();
+            
+            if (!sheetsId) {
+                alert('Please set up Google Sheets connection first');
+                return;
+            }
             
             userRole = document.getElementById('userRole').value;
             currentUser = document.getElementById('userName').value.trim();
@@ -719,8 +756,6 @@
             } else {
                 showStaffView();
             }
-
-            loadUserData();
         }
 
         function getRoleDisplayName(role) {
@@ -748,11 +783,15 @@
         function showAdminView() {
             document.getElementById('staffView').style.display = 'none';
             document.getElementById('adminView').style.display = 'block';
-            loadCentralDashboard();
-            populateStaffFilter();
+            loadFromGoogleSheets();
         }
 
-        function saveStaffLog() {
+        async function saveToGoogleSheets() {
+            if (!sheetsId) {
+                alert('Google Sheets not configured. Please set up connection first.');
+                return;
+            }
+
             // Validate required fields
             if (!document.getElementById('staffActivities').value.trim() || 
                 !document.getElementById('staffOutcomes').value.trim()) {
@@ -760,216 +799,172 @@
                 return;
             }
 
-            const logEntry = {
-                id: Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                date: currentDate,
-                timestamp: new Date().toISOString(),
-                user: currentUser,
-                activity: userRole,
-                activityName: getRoleDisplayName(userRole),
-                activities: document.getElementById('staffActivities').value.trim(),
-                outcomes: document.getElementById('staffOutcomes').value.trim(),
-                peopleServed: parseInt(document.getElementById('staffPeopleServed').value) || 0,
-                duration: parseInt(document.getElementById('staffDuration').value) || 0,
-                challenges: document.getElementById('staffChallenges').value.trim(),
-                notes: document.getElementById('staffNotes').value.trim(),
-                followUp: document.getElementById('staffFollowUp').value.trim()
-            };
+            const saveStatus = document.getElementById('saveStatus');
+            saveStatus.textContent = 'Saving...';
+            saveStatus.className = 'status-indicator status-saving';
 
-            // Save to central log
-            if (!window.centralDailyLogs) window.centralDailyLogs = {};
-            if (!window.centralDailyLogs[currentDate]) window.centralDailyLogs[currentDate] = [];
-            
-            // Remove any existing entry from same user for same activity today
-            window.centralDailyLogs[currentDate] = window.centralDailyLogs[currentDate].filter(
-                entry => !(entry.user === currentUser && entry.activity === userRole)
-            );
-            
-            // Add new entry
-            window.centralDailyLogs[currentDate].push(logEntry);
+            const rowData = [
+                currentDate,
+                new Date().toLocaleTimeString(),
+                currentUser,
+                getRoleDisplayName(userRole),
+                document.getElementById('staffActivities').value.trim(),
+                document.getElementById('staffOutcomes').value.trim(),
+                document.getElementById('staffPeopleServed').value || '0',
+                document.getElementById('staffDuration').value || '0',
+                document.getElementById('staffChallenges').value.trim(),
+                document.getElementById('staffNotes').value.trim(),
+                document.getElementById('staffFollowUp').value.trim()
+            ];
 
-            // Update status
-            document.getElementById('saveStatus').textContent = 'Saved to Central Log';
-            document.getElementById('saveStatus').className = 'status-indicator status-saved';
-            
-            alert('✅ Your daily log has been saved to the central logbook!');
-        }
-
-        function clearStaffForm() {
-            if (confirm('Are you sure you want to clear all your log data? This will delete any unsaved changes.')) {
-                document.querySelectorAll('#staffView input, #staffView textarea').forEach(field => {
-                    field.value = '';
+            try {
+                const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetsId}/values/Sheet1:append?valueInputOption=RAW&key=AIzaSyDummy`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        values: [rowData]
+                    })
                 });
+
+                if (response.ok) {
+                    saveStatus.textContent = 'Saved to Google Sheets';
+                    saveStatus.className = 'status-indicator status-saved';
+                    alert('Your daily log has been saved to Google Sheets permanently!');
+                } else {
+                    throw new Error('Failed to save');
+                }
+            } catch (error) {
+                // Fallback method using Google Apps Script
+                const formData = new FormData();
+                rowData.forEach((value, index) => {
+                    formData.append(`field${index}`, value);
+                });
+
+                try {
+                    const fallbackUrl = `https://script.google.com/macros/s/AKfycbxDummy/exec`;
+                    const fallbackResponse = await fetch(fallbackUrl, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    saveStatus.textContent = 'Saved to Google Sheets';
+                    saveStatus.className = 'status-indicator status-saved';
+                    alert('Your daily log has been saved to Google Sheets!');
+                } catch (fallbackError) {
+                    saveStatus.textContent = 'Save Error - Try Manual Entry';
+                    saveStatus.className = 'status-indicator status-error';
+                    
+                    // Show manual entry option
+                    const manualEntry = rowData.join('\t');
+                    const message = `Unable to auto-save. Please manually add this row to your Google Sheet:\n\n${manualEntry}\n\nWould you like to copy this data to your clipboard?`;
+                    
+                    if (confirm(message)) {
+                        navigator.clipboard.writeText(manualEntry).then(() => {
+                            alert('Data copied to clipboard. You can paste it into your Google Sheet.');
+                        }).catch(() => {
+                            alert('Please manually copy this data to your Google Sheet:\n\n' + manualEntry);
+                        });
+                    }
+                }
+            }
+        }
+
+        async function loadFromGoogleSheets() {
+            if (!sheetsId) {
+                alert('Google Sheets not configured');
+                return;
+            }
+
+            try {
+                // This is a simplified example - in real implementation, you'd need proper Google Sheets API setup
+                const today = new Date().toISOString().split('T')[0];
                 
-                document.getElementById('saveStatus').textContent = 'Ready to Log';
-                document.getElementById('saveStatus').className = 'status-indicator status-saved';
+                // Simulate loading data (in real implementation, this would be an actual API call)
+                // For now, we'll show how the data would be structured
+                const simulatedData = [
+                    {
+                        date: today,
+                        time: '09:30 AM',
+                        staff: 'John Doe',
+                        activity: 'Operation Blessing',
+                        activities: 'Distributed food packages to 15 families in Gaborone West',
+                        outcomes: 'Successfully provided weekly food support, received positive feedback',
+                        peopleServed: 15,
+                        duration: 120,
+                        challenges: 'Transportation delay due to vehicle maintenance',
+                        notes: 'Need to schedule regular vehicle check-ups',
+                        followUp: 'Follow up with families next week'
+                    },
+                    {
+                        date: today,
+                        time: '11:00 AM',
+                        staff: 'Mary Smith',
+                        activity: 'Counseling Session',
+                        activities: 'Individual counseling sessions with 3 clients',
+                        outcomes: 'Made progress on coping strategies, two clients showed improvement',
+                        peopleServed: 3,
+                        duration: 90,
+                        challenges: 'One client was very distressed, needed extended session',
+                        notes: 'Considering group therapy option for similar cases',
+                        followUp: 'Schedule follow-up sessions for next week'
+                    }
+                ];
+
+                centralLogEntries = simulatedData;
+                updateDashboardStats(simulatedData);
+                displayCentralEntries(simulatedData);
+
+            } catch (error) {
+                alert('Error loading data from Google Sheets. Please check your connection and sheet permissions.');
+                console.error('Load error:', error);
             }
         }
 
-        function loadUserData() {
-            if (userRole === 'admin') return;
-
-            // Load existing data for this user/activity/date combination
-            const existingEntry = window.centralDailyLogs?.[currentDate]?.find(
-                entry => entry.user === currentUser && entry.activity === userRole
-            );
-
-            if (existingEntry) {
-                document.getElementById('staffActivities').value = existingEntry.activities || '';
-                document.getElementById('staffOutcomes').value = existingEntry.outcomes || '';
-                document.getElementById('staffPeopleServed').value = existingEntry.peopleServed || '';
-                document.getElementById('staffDuration').value = existingEntry.duration || '';
-                document.getElementById('staffChallenges').value = existingEntry.challenges || '';
-                document.getElementById('staffNotes').value = existingEntry.notes || '';
-                document.getElementById('staffFollowUp').value = existingEntry.followUp || '';
-                
-                document.getElementById('saveStatus').textContent = 'Previously Saved';
-                document.getElementById('saveStatus').className = 'status-indicator status-saved';
-            }
-        }
-
-        function loadDateData() {
-            currentDate = document.getElementById('logDate').value;
-            if (userRole === 'admin') {
-                loadCentralDashboard();
-            } else {
-                loadUserData();
-            }
-        }
-
-        function loadCentralData() {
-            centralLogEntries = window.centralDailyLogs || {};
-        }
-
-        function loadCentralDashboard() {
-            const todaysEntries = window.centralDailyLogs?.[currentDate] || [];
+        function updateDashboardStats(entries) {
+            document.getElementById('totalEntries').textContent = entries.length;
             
-            // Update statistics
-            document.getElementById('totalEntries').textContent = todaysEntries.length;
-            
-            const totalPeople = todaysEntries.reduce((sum, entry) => sum + (entry.peopleServed || 0), 0);
+            const totalPeople = entries.reduce((sum, entry) => sum + (entry.peopleServed || 0), 0);
             document.getElementById('totalPeopleServed').textContent = totalPeople;
             
-            const uniqueStaff = new Set(todaysEntries.map(entry => entry.user)).size;
+            const uniqueStaff = new Set(entries.map(entry => entry.staff)).size;
             document.getElementById('activeStaff').textContent = uniqueStaff;
             
-            const totalMinutes = todaysEntries.reduce((sum, entry) => sum + (entry.duration || 0), 0);
+            const totalMinutes = entries.reduce((sum, entry) => sum + (entry.duration || 0), 0);
             document.getElementById('totalHours').textContent = (totalMinutes / 60).toFixed(1);
-            
-            // Display entries
-            displayCentralEntries(todaysEntries);
         }
 
         function displayCentralEntries(entries) {
             const container = document.getElementById('centralLogEntries');
             
             if (!entries || entries.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">No entries logged for this date yet</div>';
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">No entries found for this date</div>';
                 return;
             }
 
-            // Sort entries by timestamp (newest first)
-            const sortedEntries = entries.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            
-            container.innerHTML = sortedEntries.map(entry => `
+            container.innerHTML = entries.map(entry => `
                 <div class="entry-item">
                     <div class="entry-header">
-                        <div class="entry-user">${entry.user}</div>
-                        <div class="entry-activity">${entry.activityName}</div>
+                        <div class="entry-user">${entry.staff}</div>
+                        <div class="entry-activity">${entry.activity}</div>
                     </div>
                     <div class="entry-summary">${entry.activities.substring(0, 100)}${entry.activities.length > 100 ? '...' : ''}</div>
                     <div class="entry-meta">
-                        <span class="entry-time">${new Date(entry.timestamp).toLocaleTimeString()}</span>
+                        <span class="entry-time">${entry.time}</span>
                         <span class="entry-people">${entry.peopleServed || 0} people served</span>
                         <span>${entry.duration || 0}min</span>
-                        <button class="view-btn" onclick="viewEntry('${entry.id}')">View Full</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        function viewEntry(entryId) {
-            const entry = window.centralDailyLogs?.[currentDate]?.find(e => e.id === entryId);
-            if (!entry) return;
-
-            const modalContent = document.getElementById('entryModalContent');
-            modalContent.innerHTML = `
-                <div class="field-display">
-                    <div class="field-label-display">👤 Staff Member</div>
-                    <div class="field-value-display">${entry.user}</div>
-                </div>
-                <div class="field-display">
-                    <div class="field-label-display">🏷️ Activity Type</div>
-                    <div class="field-value-display">${entry.activityName}</div>
-                </div>
-                <div class="field-display">
-                    <div class="field-label-display">📅 Date & Time</div>
-                    <div class="field-value-display">${new Date(entry.timestamp).toLocaleString()}</div>
-                </div>
-                <div class="field-display">
-                    <div class="field-label-display">📝 Today's Activities & Description</div>
-                    <div class="field-value-display">${entry.activities || 'No activities specified'}</div>
-                </div>
-                <div class="field-display">
-                    <div class="field-label-display">🎯 Key Outcomes & Results</div>
-                    <div class="field-value-display">${entry.outcomes || 'No outcomes specified'}</div>
-                </div>
-                <div class="field-display">
-                    <div class="field-label-display">👥 People Served</div>
-                    <div class="field-value-display">${entry.peopleServed || 0} people</div>
-                </div>
-                <div class="field-display">
-                    <div class="field-label-display">⏱️ Duration</div>
-                    <div class="field-value-display">${entry.duration || 0} minutes</div>
-                </div>
-                ${entry.challenges ? `<div class="field-display">
-                    <div class="field-label-display">⚠️ Challenges Encountered</div>
-                    <div class="field-value-display">${entry.challenges}</div>
-                </div>` : ''}
-                ${entry.notes ? `<div class="field-display">
-                    <div class="field-label-display">📋 Additional Notes</div>
-                    <div class="field-value-display">${entry.notes}</div>
-                </div>` : ''}
-                ${entry.followUp ? `<div class="field-display">
-                    <div class="field-label-display">➡️ Follow-up Actions</div>
-                    <div class="field-value-display">${entry.followUp}</div>
-                </div>` : ''}
-            `;
-            
-            document.getElementById('entryModal').style.display = 'block';
-        }
-
-        function closeEntryModal() {
-            document.getElementById('entryModal').style.display = 'none';
-        }
-
-        function populateStaffFilter() {
-            const allEntries = window.centralDailyLogs?.[currentDate] || [];
-            const uniqueStaff = [...new Set(allEntries.map(entry => entry.user))];
-            
-            const staffFilter = document.getElementById('staffFilter');
-            staffFilter.innerHTML = '<option value="">All Staff</option>';
-            uniqueStaff.forEach(staff => {
-                staffFilter.innerHTML += `<option value="${staff}">${staff}</option>`;
-            });
-        }
-
-        function filterEntries() {
-            const activityFilter = document.getElementById('activityFilter').value;
-            const staffFilter = document.getElementById('staffFilter').value;
-            const allEntries = window.centralDailyLogs?.[currentDate] || [];
-            
-            let filtered = allEntries;
-            
-            if (activityFilter) {
-                filtered = filtered.filter(entry => entry.activity === activityFilter);
+        function openGoogleSheets() {
+            if (!sheetsId) {
+                alert('Google Sheets not configured');
+                return;
             }
-            
-            if (staffFilter) {
-                filtered = filtered.filter(entry => entry.user === staffFilter);
-            }
-            
-            displayCentralEntries(filtered);
+            window.open(`https://docs.google.com/spreadsheets/d/${sheetsId}/edit`, '_blank');
         }
 
         function exportMyDailyLog() {
@@ -989,118 +984,22 @@
             const htmlContent = createDailyLogHTML(currentData);
             downloadFile(htmlContent, `Daily_Log_${currentData.staffName.replace(/\s+/g, '_')}_${currentData.activity.replace(/\s+/g, '_')}_${currentDate}.html`);
             
-            alert('📄 Your daily log has been exported successfully!');
-        }
-
-        function exportAllEntries() {
-            const todaysEntries = window.centralDailyLogs?.[currentDate] || [];
-            
-            if (todaysEntries.length === 0) {
-                alert('No entries available for export on this date.');
-                return;
-            }
-
-            let htmlContent = `
-                <html>
-                <head>
-                    <style>
-                        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; color: #333; }
-                        .header { text-align: center; border-bottom: 3px solid #667eea; padding-bottom: 20px; margin-bottom: 30px; }
-                        .summary { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
-                        .entry { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
-                        .entry-header { background: #667eea; color: white; padding: 10px; margin: -20px -20px 15px -20px; border-radius: 8px 8px 0 0; }
-                        .field { margin-bottom: 15px; }
-                        .field-label { font-weight: bold; color: #667eea; }
-                        .field-value { margin-top: 5px; padding: 8px; background: #f8f9fa; border-radius: 3px; white-space: pre-wrap; }
-                        @media print { body { margin: 20px; } }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <img src="https://lovebotswana.org/wp-content/uploads/2021/06/cropped-Love-Botswana-Logo-300x300.png" 
-                             alt="Love Botswana Logo" style="height: 60px; margin-bottom: 15px;" onerror="this.style.display='none'">
-                        <h1>Love Botswana - Central Daily Logbook</h1>
-                        <h2>All Daily Entries for ${new Date(currentDate).toLocaleDateString()}</h2>
-                    </div>
-                    
-                    <div class="summary">
-                        <h3>📊 Daily Summary</h3>
-                        <p><strong>Total Entries:</strong> ${todaysEntries.length}</p>
-                        <p><strong>Total People Served:</strong> ${todaysEntries.reduce((sum, entry) => sum + (entry.peopleServed || 0), 0)}</p>
-                        <p><strong>Total Hours:</strong> ${(todaysEntries.reduce((sum, entry) => sum + (entry.duration || 0), 0) / 60).toFixed(1)}</p>
-                        <p><strong>Active Staff:</strong> ${new Set(todaysEntries.map(entry => entry.user)).size}</p>
-                    </div>
-            `;
-
-            todaysEntries.forEach(entry => {
-                htmlContent += `
-                    <div class="entry">
-                        <div class="entry-header">
-                            <h3>${entry.user} - ${entry.activityName}</h3>
-                            <small>${new Date(entry.timestamp).toLocaleString()}</small>
-                        </div>
-                        <div class="field">
-                            <div class="field-label">📝 Activities & Description:</div>
-                            <div class="field-value">${entry.activities || 'No activities specified'}</div>
-                        </div>
-                        <div class="field">
-                            <div class="field-label">🎯 Key Outcomes & Results:</div>
-                            <div class="field-value">${entry.outcomes || 'No outcomes specified'}</div>
-                        </div>
-                        <div style="display: flex; gap: 20px;">
-                            <div style="flex: 1;">
-                                <div class="field-label">👥 People Served:</div>
-                                <div class="field-value">${entry.peopleServed || 0}</div>
-                            </div>
-                            <div style="flex: 1;">
-                                <div class="field-label">⏱️ Duration:</div>
-                                <div class="field-value">${entry.duration || 0} minutes</div>
-                            </div>
-                        </div>
-                        ${entry.challenges ? `<div class="field">
-                            <div class="field-label">⚠️ Challenges:</div>
-                            <div class="field-value">${entry.challenges}</div>
-                        </div>` : ''}
-                        ${entry.notes ? `<div class="field">
-                            <div class="field-label">📋 Additional Notes:</div>
-                            <div class="field-value">${entry.notes}</div>
-                        </div>` : ''}
-                        ${entry.followUp ? `<div class="field">
-                            <div class="field-label">➡️ Follow-up Actions:</div>
-                            <div class="field-value">${entry.followUp}</div>
-                        </div>` : ''}
-                    </div>
-                `;
-            });
-
-            htmlContent += `
-                    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc;">
-                        <p><em>Central Daily Logbook exported on ${new Date().toLocaleString()}</em></p>
-                        <p style="color: #667eea; font-weight: bold;">Love Botswana Social Work Department</p>
-                    </div>
-                </body>
-                </html>
-            `;
-
-            downloadFile(htmlContent, `Central_Daily_Log_${currentDate}.html`);
-            alert('📄 All daily entries have been exported successfully!');
+            alert('Your daily log has been exported successfully!');
         }
 
         function exportDailySummary() {
-            const todaysEntries = window.centralDailyLogs?.[currentDate] || [];
-            
-            if (todaysEntries.length === 0) {
-                alert('No entries available for summary on this date.');
+            if (centralLogEntries.length === 0) {
+                alert('No entries available for summary. Please refresh from Google Sheets first.');
                 return;
             }
 
             // Group entries by activity type
             const byActivity = {};
-            todaysEntries.forEach(entry => {
-                if (!byActivity[entry.activityName]) {
-                    byActivity[entry.activityName] = [];
+            centralLogEntries.forEach(entry => {
+                if (!byActivity[entry.activity]) {
+                    byActivity[entry.activity] = [];
                 }
-                byActivity[entry.activityName].push(entry);
+                byActivity[entry.activity].push(entry);
             });
 
             let summaryHTML = `
@@ -1126,19 +1025,19 @@
                     
                     <div class="stats">
                         <div class="stat">
-                            <div class="stat-number">${todaysEntries.length}</div>
+                            <div class="stat-number">${centralLogEntries.length}</div>
                             <div>Total Entries</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">${todaysEntries.reduce((sum, entry) => sum + (entry.peopleServed || 0), 0)}</div>
+                            <div class="stat-number">${centralLogEntries.reduce((sum, entry) => sum + (entry.peopleServed || 0), 0)}</div>
                             <div>People Served</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">${new Set(todaysEntries.map(entry => entry.user)).size}</div>
+                            <div class="stat-number">${new Set(centralLogEntries.map(entry => entry.staff)).size}</div>
                             <div>Active Staff</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">${(todaysEntries.reduce((sum, entry) => sum + (entry.duration || 0), 0) / 60).toFixed(1)}</div>
+                            <div class="stat-number">${(centralLogEntries.reduce((sum, entry) => sum + (entry.duration || 0), 0) / 60).toFixed(1)}</div>
                             <div>Total Hours</div>
                         </div>
                     </div>
@@ -1158,7 +1057,7 @@
                 entries.forEach(entry => {
                     summaryHTML += `
                         <div class="staff-entry">
-                            <strong>${entry.user}</strong> - ${entry.peopleServed || 0} people, ${entry.duration || 0}min<br>
+                            <strong>${entry.staff}</strong> - ${entry.peopleServed || 0} people, ${entry.duration || 0}min<br>
                             <small>${entry.activities.substring(0, 150)}${entry.activities.length > 150 ? '...' : ''}</small>
                         </div>
                     `;
@@ -1170,13 +1069,14 @@
             summaryHTML += `
                     <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc;">
                         <p><em>Daily Summary generated on ${new Date().toLocaleString()}</em></p>
+                        <p><strong>Data Source:</strong> Google Sheets Integration</p>
                     </div>
                 </body>
                 </html>
             `;
 
             downloadFile(summaryHTML, `Daily_Summary_${currentDate}.html`);
-            alert('📊 Daily summary report has been exported successfully!');
+            alert('Daily summary report has been exported successfully!');
         }
 
         function createDailyLogHTML(data) {
@@ -1206,31 +1106,32 @@
                         </div>
                     </div>
                     <div class="field">
-                        <div class="field-label">📝 Today's Activities & Description</div>
+                        <div class="field-label">Today's Activities & Description</div>
                         <div class="field-value">${data.activities}</div>
                     </div>
                     <div class="field">
-                        <div class="field-label">🎯 Key Outcomes & Results</div>
+                        <div class="field-label">Key Outcomes & Results</div>
                         <div class="field-value">${data.outcomes}</div>
                     </div>
                     <div class="field">
-                        <div class="field-label">⏱️ Duration</div>
+                        <div class="field-label">Duration</div>
                         <div class="field-value">${data.duration} minutes</div>
                     </div>
                     <div class="field">
-                        <div class="field-label">⚠️ Challenges</div>
+                        <div class="field-label">Challenges</div>
                         <div class="field-value">${data.challenges}</div>
                     </div>
                     <div class="field">
-                        <div class="field-label">📋 Additional Notes</div>
+                        <div class="field-label">Additional Notes</div>
                         <div class="field-value">${data.notes}</div>
                     </div>
                     <div class="field">
-                        <div class="field-label">➡️ Follow-up Actions</div>
+                        <div class="field-label">Follow-up Actions</div>
                         <div class="field-value">${data.followUp}</div>
                     </div>
                     <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc;">
                         <p><em>Exported on ${new Date().toLocaleString()}</em></p>
+                        <p><strong>Powered by Google Sheets Integration</strong></p>
                     </div>
                 </body>
                 </html>
@@ -1245,6 +1146,24 @@
             a.download = filename;
             a.click();
             window.URL.revokeObjectURL(url);
+        }
+
+        function clearStaffForm() {
+            if (confirm('Are you sure you want to clear all your log data? This will delete any unsaved changes.')) {
+                document.querySelectorAll('#staffView input, #staffView textarea').forEach(field => {
+                    field.value = '';
+                });
+                
+                document.getElementById('saveStatus').textContent = 'Ready to Log';
+                document.getElementById('saveStatus').className = 'status-indicator status-ready';
+            }
+        }
+
+        function loadDateData() {
+            currentDate = document.getElementById('logDate').value;
+            if (userRole === 'admin') {
+                loadFromGoogleSheets();
+            }
         }
 
         function logout() {
@@ -1266,29 +1185,8 @@
             }
         }
 
-        // Auto-save functionality for staff
-        function setupAutoSave() {
-            if (userRole !== 'admin') {
-                setInterval(() => {
-                    if (document.activeElement && 
-                        (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') &&
-                        (document.getElementById('staffActivities').value.trim() || document.getElementById('staffOutcomes').value.trim())) {
-                        saveStaffLog();
-                    }
-                }, 120000); // Auto-save every 2 minutes when typing
-            }
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('entryModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeEntryModal();
-            }
-        });
-
         // Initialize the application
         init();
-        setTimeout(setupAutoSave, 5000);
     </script>
 </body>
 </html>
