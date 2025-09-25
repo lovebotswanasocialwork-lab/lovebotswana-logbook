@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Botswana - Central Social Work Daily Logbook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3c72 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            font-weight: 500;
+        }
+
+        .header-info {
+            text-align: right;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .user-info {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* Login Screen Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 40px;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 1.5em;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .login-form select, .login-form input {
+            padding: 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .login-form select:focus, .login-form input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px;
+            display: none;
+        }
+
+        .main-content.active {
+            display: block;
+        }
+
+        .date-selector {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .date-selector label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .date-selector input {
+            padding: 8px 12px;
+            border: 2px solid #e0e6ed;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: 600;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .required {
+            color: #dc3545;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+            flex-wrap: wrap;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .export-btn {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .export-btn:hover {
+            background: #138496;
+            transform: translateY(-2px);
+        }
+
+        .clear-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        /* Central Dashboard Styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .stats-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            text-align: center;
+        }
+
+        .stats-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stats-label {
+            color: #666;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .daily-entries {
+            background: white;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            overflow: hidden;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .entry-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.3s ease;
+        }
+
+        .entry-item:hover {
+            background: #f8f9fa;
+        }
+
+        .entry-item:last-child {
+            border-bottom: none;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .entry-user {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .entry-activity {
+            background: #e8f4f8;
+            color: #0c5460;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .entry-summary {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .entry-meta {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            font-size: 11px;
+            color: #888;
+        }
+
+        .entry-time {
+            margin-right: 15px;
+        }
+
+        .entry-people {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .view-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            margin-left: 10px;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-controls select {
+            padding: 8px 12px;
+            border: 2px solid #e0e6ed;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .status-indicator {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-saved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .field-display {
+            margin-bottom: 15px;
+        }
+
+        .field-label-display {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .field-value-display {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #667eea;
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="https://lovebotswana.org/wp-content/uploads/2021/06/cropped-Love-Botswana-Logo-300x300.png" 
+                     alt="Love Botswana Logo" 
+                     style="height: 50px; width: 50px; border-radius: 8px; background: white; padding: 5px;"
+                     onerror="this.style.display='none'">
+                <div>
+                    <h1>Love Botswana - Central Daily Logbook</h1>
+                </div>
+            </div>
+            <div class="header-info">
+                <div id="currentDate"></div>
+                <div>Social Work Department</div>
+                <div class="user-info" id="userInfo" style="display: none;">
+                    <span id="currentUser"></span>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Screen -->
+        <div class="login-container" id="loginScreen">
+            <div class="login-box">
+                <h2>🔐 Login to Daily Logbook</h2>
+                <form class="login-form" onsubmit="login(event)">
+                    <select id="userRole" required>
+                        <option value="">Select Department Activity</option>
+                        <option value="operation-blessing">Operation Blessing</option>
+                        <option value="counseling-session">Counseling Session</option>
+                        <option value="play-therapy">Play Therapy</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="case">Case</option>
+                        <option value="donations">Donations</option>
+                        <option value="intake-session">Intake Session</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="other-activities">Other Activities</option>
+                        <option value="admin">Administrator/Supervisor</option>
+                    </select>
+                    <input type="text" id="userName" placeholder="Enter your full name" required>
+                    <button type="submit" class="login-btn">Login & Start Daily Log</button>
+                </form>
+                <div style="margin-top: 20px; font-size: 12px; color: #666; text-align: center;">
+                    <p><strong>Instructions:</strong></p>
+                    <p>• Social Workers: Log your daily activities - all entries are saved centrally</p>
+                    <p>• Administrators: View all team entries and export reports</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div class="main-content" id="dashboard">
+            <div class="date-selector">
+                <label for="logDate">Log Date:</label>
+                <input type="date" id="logDate">
+                <button class="save-btn" style="padding: 8px 15px; font-size: 13px;" onclick="loadDateData()">Load Date</button>
+                <div style="margin-left: auto;">
+                    <span class="status-indicator status-saved" id="saveStatus">Ready to Log</span>
+                </div>
+            </div>
+
+            <!-- Staff Daily Log Entry View -->
+            <div id="staffView" style="display: none;">
+                <h2 class="section-title" id="staffTitle">📝 Daily Activity Log Entry</h2>
+                
+                <div class="form-group">
+                    <label for="staffActivities">Today's Activities & Description <span class="required">*</span></label>
+                    <textarea id="staffActivities" placeholder="Describe the specific activities, services provided, or work completed today..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="staffOutcomes">Key Outcomes & Results <span class="required">*</span></label>
+                    <textarea id="staffOutcomes" placeholder="What were the main outcomes, results, or positive impacts from today's activities..." required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="staffPeopleServed">People Served/Contacted</label>
+                        <input type="number" id="staffPeopleServed" placeholder="Number of people" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="staffDuration">Time Spent (minutes)</label>
+                        <input type="number" id="staffDuration" placeholder="Duration in minutes" min="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="staffChallenges">Challenges or Issues Encountered</label>
+                    <textarea id="staffChallenges" placeholder="Describe any challenges, obstacles, or issues you encountered today..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="staffNotes">Additional Notes & Observations</label>
+                    <textarea id="staffNotes" placeholder="Additional notes, observations, follow-up needed, or other relevant information..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="staffFollowUp">Follow-up Actions Required</label>
+                    <textarea id="staffFollowUp" placeholder="What follow-up actions or next steps are needed based on today's activities?"></textarea>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="save-btn" onclick="saveStaffLog()">💾 Save to Central Log</button>
+                    <button class="export-btn" onclick="exportMyDailyLog()">📄 Export My Log</button>
+                    <button class="clear-btn" onclick="clearStaffForm()">🔄 Clear Form</button>
+                </div>
+            </div>
+
+            <!-- Administrator Central Dashboard View -->
+            <div id="adminView" style="display: none;">
+                <div class="dashboard-grid">
+                    <div class="stats-card">
+                        <div class="stats-number" id="totalEntries">0</div>
+                        <div class="stats-label">Daily Entries</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number" id="totalPeopleServed">0</div>
+                        <div class="stats-label">People Served Today</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number" id="activeStaff">0</div>
+                        <div class="stats-label">Active Staff</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number" id="totalHours">0.0</div>
+                        <div class="stats-label">Total Hours</div>
+                    </div>
+                </div>
+
+                <div class="filter-controls">
+                    <label>Filter by Activity:</label>
+                    <select id="activityFilter" onchange="filterEntries()">
+                        <option value="">All Activities</option>
+                        <option value="operation-blessing">Operation Blessing</option>
+                        <option value="counseling-session">Counseling Session</option>
+                        <option value="play-therapy">Play Therapy</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="case">Case</option>
+                        <option value="donations">Donations</option>
+                        <option value="intake-session">Intake Session</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="other-activities">Other Activities</option>
+                    </select>
+                    
+                    <label>Filter by Staff:</label>
+                    <select id="staffFilter" onchange="filterEntries()">
+                        <option value="">All Staff</option>
+                    </select>
+
+                    <button class="export-btn" onclick="exportAllEntries()">📄 Export All Entries</button>
+                    <button class="save-btn" onclick="exportDailySummary()">📊 Daily Summary</button>
+                </div>
+
+                <h3 class="section-title">📋 Today's Central Log Entries</h3>
+                <div class="daily-entries" id="centralLogEntries">
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        No entries logged for this date yet
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entry Detail Modal -->
+    <div class="modal" id="entryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 Daily Log Entry Details</h3>
+                <button class="close-modal" onclick="closeEntryModal()">&times;</button>
+            </div>
+            <div id="entryModalContent">
+                <!-- Entry details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let userRole = null;
+        let currentDate = '';
+        let centralLogEntries = {};
+        let filteredEntries = [];
+
+        function init() {
+            updateCurrentDate();
+            setDefaultDate();
+            loadCentralData();
+        }
+
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        function setDefaultDate() {
+            const today = new Date().toISOString().split('T')[0];
+            currentDate = today;
+            document.getElementById('logDate').value = today;
+        }
+
+        function login(event) {
+            event.preventDefault();
+            
+            userRole = document.getElementById('userRole').value;
+            currentUser = document.getElementById('userName').value.trim();
+            
+            if (!userRole || !currentUser) {
+                alert('Please select your activity and enter your name.');
+                return;
+            }
+
+            // Show user info in header
+            document.getElementById('currentUser').textContent = `${currentUser} (${getRoleDisplayName(userRole)})`;
+            document.getElementById('userInfo').style.display = 'block';
+            
+            // Hide login screen and show dashboard
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').classList.add('active');
+            
+            // Show appropriate view based on role
+            if (userRole === 'admin') {
+                showAdminView();
+            } else {
+                showStaffView();
+            }
+
+            loadUserData();
+        }
+
+        function getRoleDisplayName(role) {
+            const roleNames = {
+                'admin': 'Administrator/Supervisor',
+                'operation-blessing': 'Operation Blessing',
+                'counseling-session': 'Counseling Session',
+                'play-therapy': 'Play Therapy',
+                'meeting': 'Meeting',
+                'case': 'Case',
+                'donations': 'Donations',
+                'intake-session': 'Intake Session',
+                'workshop': 'Workshop',
+                'other-activities': 'Other Activities'
+            };
+            return roleNames[role] || role;
+        }
+
+        function showStaffView() {
+            document.getElementById('staffView').style.display = 'block';
+            document.getElementById('adminView').style.display = 'none';
+            document.getElementById('staffTitle').textContent = `📝 ${getRoleDisplayName(userRole)} - Daily Log Entry`;
+        }
+
+        function showAdminView() {
+            document.getElementById('staffView').style.display = 'none';
+            document.getElementById('adminView').style.display = 'block';
+            loadCentralDashboard();
+            populateStaffFilter();
+        }
+
+        function saveStaffLog() {
+            // Validate required fields
+            if (!document.getElementById('staffActivities').value.trim() || 
+                !document.getElementById('staffOutcomes').value.trim()) {
+                alert('Please fill in all required fields (Activities and Outcomes).');
+                return;
+            }
+
+            const logEntry = {
+                id: Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                date: currentDate,
+                timestamp: new Date().toISOString(),
+                user: currentUser,
+                activity: userRole,
+                activityName: getRoleDisplayName(userRole),
+                activities: document.getElementById('staffActivities').value.trim(),
+                outcomes: document.getElementById('staffOutcomes').value.trim(),
+                peopleServed: parseInt(document.getElementById('staffPeopleServed').value) || 0,
+                duration: parseInt(document.getElementById('staffDuration').value) || 0,
+                challenges: document.getElementById('staffChallenges').value.trim(),
+                notes: document.getElementById('staffNotes').value.trim(),
+                followUp: document.getElementById('staffFollowUp').value.trim()
+            };
+
+            // Save to central log
+            if (!window.centralDailyLogs) window.centralDailyLogs = {};
+            if (!window.centralDailyLogs[currentDate]) window.centralDailyLogs[currentDate] = [];
+            
+            // Remove any existing entry from same user for same activity today
+            window.centralDailyLogs[currentDate] = window.centralDailyLogs[currentDate].filter(
+                entry => !(entry.user === currentUser && entry.activity === userRole)
+            );
+            
+            // Add new entry
+            window.centralDailyLogs[currentDate].push(logEntry);
+
+            // Update status
+            document.getElementById('saveStatus').textContent = 'Saved to Central Log';
+            document.getElementById('saveStatus').className = 'status-indicator status-saved';
+            
+            alert('✅ Your daily log has been saved to the central logbook!');
+        }
+
+        function clearStaffForm() {
+            if (confirm('Are you sure you want to clear all your log data? This will delete any unsaved changes.')) {
+                document.querySelectorAll('#staffView input, #staffView textarea').forEach(field => {
+                    field.value = '';
+                });
+                
+                document.getElementById('saveStatus').textContent = 'Ready to Log';
+                document.getElementById('saveStatus').className = 'status-indicator status-saved';
+            }
+        }
+
+        function loadUserData() {
+            if (userRole === 'admin') return;
+
+            // Load existing data for this user/activity/date combination
+            const existingEntry = window.centralDailyLogs?.[currentDate]?.find(
+                entry => entry.user === currentUser && entry.activity === userRole
+            );
+
+            if (existingEntry) {
+                document.getElementById('staffActivities').value = existingEntry.activities || '';
+                document.getElementById('staffOutcomes').value = existingEntry.outcomes || '';
+                document.getElementById('staffPeopleServed').value = existingEntry.peopleServed || '';
+                document.getElementById('staffDuration').value = existingEntry.duration || '';
+                document.getElementById('staffChallenges').value = existingEntry.challenges || '';
+                document.getElementById('staffNotes').value = existingEntry.notes || '';
+                document.getElementById('staffFollowUp').value = existingEntry.followUp || '';
+                
+                document.getElementById('saveStatus').textContent = 'Previously Saved';
+                document.getElementById('saveStatus').className = 'status-indicator status-saved';
+            }
+        }
+
+        function loadDateData() {
+            currentDate = document.getElementById('logDate').value;
+            if (userRole === 'admin') {
+                loadCentralDashboard();
+            } else {
+                loadUserData();
+            }
+        }
+
+        function loadCentralData() {
+            centralLogEntries = window.centralDailyLogs || {};
+        }
+
+        function loadCentralDashboard() {
+            const todaysEntries = window.centralDailyLogs?.[currentDate] || [];
+            
+            // Update statistics
+            document.getElementById('totalEntries').textContent = todaysEntries.length;
+            
+            const totalPeople = todaysEntries.reduce((sum, entry) => sum + (entry.peopleServed || 0), 0);
+            document.getElementById('totalPeopleServed').textContent = totalPeople;
+            
+            const uniqueStaff = new Set(todaysEntries.map(entry => entry.user)).size;
+            document.getElementById('activeStaff').textContent = uniqueStaff;
+            
+            const totalMinutes = todaysEntries.reduce((sum, entry) => sum + (entry.duration || 0), 0);
+            document.getElementById('totalHours').textContent = (totalMinutes / 60).toFixed(1);
+            
+            // Display entries
+            displayCentralEntries(todaysEntries);
+        }
+
+        function displayCentralEntries(entries) {
+            const container = document.getElementById('centralLogEntries');
+            
+            if (!entries || entries.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">No entries logged for this date yet</div>';
+                return;
+            }
+
+            // Sort entries by timestamp (newest first)
+            const sortedEntries = entries.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            container.innerHTML = sortedEntries.map(entry => `
+                <div class="entry-item">
+                    <div class="entry-header">
+                        <div class="entry-user">${entry.user}</div>
+                        <div class="entry-activity">${entry.activityName}</div>
+                    </div>
+                    <div class="entry-summary">${entry.activities.substring(0, 100)}${entry.activities.length > 100 ? '...' : ''}</div>
+                    <div class="entry-meta">
+                        <span class="entry-time">${new Date(entry.timestamp).toLocaleTimeString()}</span>
+                        <span class="entry-people">${entry.peopleServed || 0} people served</span>
+                        <span>${entry.duration || 0}min</span>
+                        <button class="view-btn" onclick="viewEntry('${entry.id}')">View Full</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function viewEntry(entryId) {
+            const entry = window.centralDailyLogs?.[currentDate]?.find(e => e.id === entryId);
+            if (!entry) return;
+
+            const modalContent = document.getElementById('entryModalContent');
+            modalContent.innerHTML = `
+                <div class="field-display">
+                    <div class="field-label-display">👤 Staff Member</div>
+                    <div class="field-value-display">${entry.user}</div>
+                </div>
+                <div class="field-display">
+                    <div class="field-label-display">🏷️ Activity Type</div>
+                    <div class="field-value-display">${entry.activityName}</div>
+                </div>
+                <div class="field-display">
+                    <div class="field-label-display">📅 Date & Time</div>
+                    <div class="field-value-display">${new Date(entry.timestamp).toLocaleString()}</div>
+                </div>
+                <div class="field-display">
+                    <div class="field-label-display">📝 Today's Activities & Description</div>
+                    <div class="field-value-display">${entry.activities || 'No activities specified'}</div>
+                </div>
+                <div class="field-display">
+                    <div class="field-label-display">🎯 Key Outcomes & Results</div>
+                    <div class="field-value-display">${entry.outcomes || 'No outcomes specified'}</div>
+                </div>
+                <div class="field-display">
+                    <div class="field-label-display">👥 People Served</div>
+                    <div class="field-value-display">${entry.peopleServed || 0} people</div>
+                </div>
+                <div class="field-display">
+                    <div class="field-label-display">⏱️ Duration</div>
+                    <div class="field-value-display">${entry.duration || 0} minutes</div>
+                </div>
+                ${entry.challenges ? `<div class="field-display">
+                    <div class="field-label-display">⚠️ Challenges Encountered</div>
+                    <div class="field-value-display">${entry.challenges}</div>
+                </div>` : ''}
+                ${entry.notes ? `<div class="field-display">
+                    <div class="field-label-display">📋 Additional Notes</div>
+                    <div class="field-value-display">${entry.notes}</div>
+                </div>` : ''}
+                ${entry.followUp ? `<div class="field-display">
+                    <div class="field-label-display">➡️ Follow-up Actions</div>
+                    <div class="field-value-display">${entry.followUp}</div>
+                </div>` : ''}
+            `;
+            
+            document.getElementById('entryModal').style.display = 'block';
+        }
+
+        function closeEntryModal() {
+            document.getElementById('entryModal').style.display = 'none';
+        }
+
+        function populateStaffFilter() {
+            const allEntries = window.centralDailyLogs?.[currentDate] || [];
+            const uniqueStaff = [...new Set(allEntries.map(entry => entry.user))];
+            
+            const staffFilter = document.getElementById('staffFilter');
+            staffFilter.innerHTML = '<option value="">All Staff</option>';
+            uniqueStaff.forEach(staff => {
+                staffFilter.innerHTML += `<option value="${staff}">${staff}</option>`;
+            });
+        }
+
+        function filterEntries() {
+            const activityFilter = document.getElementById('activityFilter').value;
+            const staffFilter = document.getElementById('staffFilter').value;
+            const allEntries = window.centralDailyLogs?.[currentDate] || [];
+            
+            let filtered = allEntries;
+            
+            if (activityFilter) {
+                filtered = filtered.filter(entry => entry.activity === activityFilter);
+            }
+            
+            if (staffFilter) {
+                filtered = filtered.filter(entry => entry.user === staffFilter);
+            }
+            
+            displayCentralEntries(filtered);
+        }
+
+        function exportMyDailyLog() {
+            const currentData = {
+                activity: getRoleDisplayName(userRole),
+                staffName: currentUser,
+                date: currentDate,
+                activities: document.getElementById('staffActivities').value || 'No activities specified',
+                outcomes: document.getElementById('staffOutcomes').value || 'No outcomes specified',
+                peopleServed: document.getElementById('staffPeopleServed').value || 'Not specified',
+                duration: document.getElementById('staffDuration').value || 'Not specified',
+                challenges: document.getElementById('staffChallenges').value || 'No challenges reported',
+                notes: document.getElementById('staffNotes').value || 'No additional notes',
+                followUp: document.getElementById('staffFollowUp').value || 'No follow-up actions specified'
+            };
+
+            const htmlContent = createDailyLogHTML(currentData);
+            downloadFile(htmlContent, `Daily_Log_${currentData.staffName.replace(/\s+/g, '_')}_${currentData.activity.replace(/\s+/g, '_')}_${currentDate}.html`);
+            
+            alert('📄 Your daily log has been exported successfully!');
+        }
+
+        function exportAllEntries() {
+            const todaysEntries = window.centralDailyLogs?.[currentDate] || [];
+            
+            if (todaysEntries.length === 0) {
+                alert('No entries available for export on this date.');
+                return;
+            }
+
+            let htmlContent = `
+                <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; color: #333; }
+                        .header { text-align: center; border-bottom: 3px solid #667eea; padding-bottom: 20px; margin-bottom: 30px; }
+                        .summary { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
+                        .entry { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+                        .entry-header { background: #667eea; color: white; padding: 10px; margin: -20px -20px 15px -20px; border-radius: 8px 8px 0 0; }
+                        .field { margin-bottom: 15px; }
+                        .field-label { font-weight: bold; color: #667eea; }
+                        .field-value { margin-top: 5px; padding: 8px; background: #f8f9fa; border-radius: 3px; white-space: pre-wrap; }
+                        @media print { body { margin: 20px; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <img src="https://lovebotswana.org/wp-content/uploads/2021/06/cropped-Love-Botswana-Logo-300x300.png" 
+                             alt="Love Botswana Logo" style="height: 60px; margin-bottom: 15px;" onerror="this.style.display='none'">
+                        <h1>Love Botswana - Central Daily Logbook</h1>
+                        <h2>All Daily Entries for ${new Date(currentDate).toLocaleDateString()}</h2>
+                    </div>
+                    
+                    <div class="summary">
+                        <h3>📊 Daily Summary</h3>
+                        <p><strong>Total Entries:</strong> ${todaysEntries.length}</p>
+                        <p><strong>Total People Served:</strong> ${todaysEntries.reduce((sum, entry) => sum + (entry.peopleServed || 0), 0)}</p>
+                        <p><strong>Total Hours:</strong> ${(todaysEntries.reduce((sum, entry) => sum + (entry.duration || 0), 0) / 60).toFixed(1)}</p>
+                        <p><strong>Active Staff:</strong> ${new Set(todaysEntries.map(entry => entry.user)).size}</p>
+                    </div>
+            `;
+
+            todaysEntries.forEach(entry => {
+                htmlContent += `
+                    <div class="entry">
+                        <div class="entry-header">
+                            <h3>${entry.user} - ${entry.activityName}</h3>
+                            <small>${new Date(entry.timestamp).toLocaleString()}</small>
+                        </div>
+                        <div class="field">
+                            <div class="field-label">📝 Activities & Description:</div>
+                            <div class="field-value">${entry.activities || 'No activities specified'}</div>
+                        </div>
+                        <div class="field">
+                            <div class="field-label">🎯 Key Outcomes & Results:</div>
+                            <div class="field-value">${entry.outcomes || 'No outcomes specified'}</div>
+                        </div>
+                        <div style="display: flex; gap: 20px;">
+                            <div style="flex: 1;">
+                                <div class="field-label">👥 People Served:</div>
+                                <div class="field-value">${entry.peopleServed || 0}</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <div class="field-label">⏱️ Duration:</div>
+                                <div class="field-value">${entry.duration || 0} minutes</div>
+                            </div>
+                        </div>
+                        ${entry.challenges ? `<div class="field">
+                            <div class="field-label">⚠️ Challenges:</div>
+                            <div class="field-value">${entry.challenges}</div>
+                        </div>` : ''}
+                        ${entry.notes ? `<div class="field">
+                            <div class="field-label">📋 Additional Notes:</div>
+                            <div class="field-value">${entry.notes}</div>
+                        </div>` : ''}
+                        ${entry.followUp ? `<div class="field">
+                            <div class="field-label">➡️ Follow-up Actions:</div>
+                            <div class="field-value">${entry.followUp}</div>
+                        </div>` : ''}
+                    </div>
+                `;
+            });
+
+            htmlContent += `
+                    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc;">
+                        <p><em>Central Daily Logbook exported on ${new Date().toLocaleString()}</em></p>
+                        <p style="color: #667eea; font-weight: bold;">Love Botswana Social Work Department</p>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            downloadFile(htmlContent, `Central_Daily_Log_${currentDate}.html`);
+            alert('📄 All daily entries have been exported successfully!');
+        }
+
+        function exportDailySummary() {
+            const todaysEntries = window.centralDailyLogs?.[currentDate] || [];
+            
+            if (todaysEntries.length === 0) {
+                alert('No entries available for summary on this date.');
+                return;
+            }
+
+            // Group entries by activity type
+            const byActivity = {};
+            todaysEntries.forEach(entry => {
+                if (!byActivity[entry.activityName]) {
+                    byActivity[entry.activityName] = [];
+                }
+                byActivity[entry.activityName].push(entry);
+            });
+
+            let summaryHTML = `
+                <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; }
+                        .header { text-align: center; border-bottom: 3px solid #667eea; padding-bottom: 20px; margin-bottom: 30px; }
+                        .stats { display: flex; justify-content: space-around; background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
+                        .stat { text-align: center; }
+                        .stat-number { font-size: 28px; font-weight: bold; color: #667eea; }
+                        .activity-section { margin-bottom: 30px; padding: 15px; border-left: 4px solid #667eea; background: #f8f9fa; }
+                        .staff-entry { margin-bottom: 15px; padding: 10px; background: white; border-radius: 5px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <img src="https://lovebotswana.org/wp-content/uploads/2021/06/cropped-Love-Botswana-Logo-300x300.png" 
+                             alt="Love Botswana Logo" style="height: 60px; margin-bottom: 15px;" onerror="this.style.display='none'">
+                        <h1>Love Botswana - Daily Summary Report</h1>
+                        <h2>${new Date(currentDate).toLocaleDateString()}</h2>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-number">${todaysEntries.length}</div>
+                            <div>Total Entries</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">${todaysEntries.reduce((sum, entry) => sum + (entry.peopleServed || 0), 0)}</div>
+                            <div>People Served</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">${new Set(todaysEntries.map(entry => entry.user)).size}</div>
+                            <div>Active Staff</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">${(todaysEntries.reduce((sum, entry) => sum + (entry.duration || 0), 0) / 60).toFixed(1)}</div>
+                            <div>Total Hours</div>
+                        </div>
+                    </div>
+            `;
+
+            Object.keys(byActivity).forEach(activityName => {
+                const entries = byActivity[activityName];
+                const totalPeople = entries.reduce((sum, entry) => sum + (entry.peopleServed || 0), 0);
+                const totalTime = entries.reduce((sum, entry) => sum + (entry.duration || 0), 0);
+
+                summaryHTML += `
+                    <div class="activity-section">
+                        <h3>${activityName} (${entries.length} entries)</h3>
+                        <p><strong>People Served:</strong> ${totalPeople} | <strong>Total Time:</strong> ${(totalTime/60).toFixed(1)} hours</p>
+                `;
+
+                entries.forEach(entry => {
+                    summaryHTML += `
+                        <div class="staff-entry">
+                            <strong>${entry.user}</strong> - ${entry.peopleServed || 0} people, ${entry.duration || 0}min<br>
+                            <small>${entry.activities.substring(0, 150)}${entry.activities.length > 150 ? '...' : ''}</small>
+                        </div>
+                    `;
+                });
+
+                summaryHTML += `</div>`;
+            });
+
+            summaryHTML += `
+                    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc;">
+                        <p><em>Daily Summary generated on ${new Date().toLocaleString()}</em></p>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            downloadFile(summaryHTML, `Daily_Summary_${currentDate}.html`);
+            alert('📊 Daily summary report has been exported successfully!');
+        }
+
+        function createDailyLogHTML(data) {
+            return `
+                <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; color: #333; }
+                        .header { text-align: center; border-bottom: 3px solid #667eea; padding-bottom: 20px; margin-bottom: 30px; }
+                        .summary-box { background: #e8f4f8; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #bee5eb; }
+                        .field { margin-bottom: 20px; }
+                        .field-label { font-weight: bold; color: #667eea; margin-bottom: 8px; display: block; }
+                        .field-value { padding: 12px; background: #f8f9fa; border-radius: 5px; border-left: 4px solid #667eea; white-space: pre-wrap; }
+                        @media print { body { margin: 20px; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <img src="https://lovebotswana.org/wp-content/uploads/2021/06/cropped-Love-Botswana-Logo-300x300.png" 
+                             alt="Love Botswana Logo" style="height: 60px; margin-bottom: 15px;" onerror="this.style.display='none'">
+                        <h1>Love Botswana - Daily Activity Log</h1>
+                        <div class="summary-box">
+                            <strong>Activity:</strong> ${data.activity}<br>
+                            <strong>Staff:</strong> ${data.staffName}<br>
+                            <strong>Date:</strong> ${new Date(data.date).toLocaleDateString()}<br>
+                            <strong>People Served:</strong> ${data.peopleServed}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">📝 Today's Activities & Description</div>
+                        <div class="field-value">${data.activities}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">🎯 Key Outcomes & Results</div>
+                        <div class="field-value">${data.outcomes}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">⏱️ Duration</div>
+                        <div class="field-value">${data.duration} minutes</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">⚠️ Challenges</div>
+                        <div class="field-value">${data.challenges}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">📋 Additional Notes</div>
+                        <div class="field-value">${data.notes}</div>
+                    </div>
+                    <div class="field">
+                        <div class="field-label">➡️ Follow-up Actions</div>
+                        <div class="field-value">${data.followUp}</div>
+                    </div>
+                    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc;">
+                        <p><em>Exported on ${new Date().toLocaleString()}</em></p>
+                    </div>
+                </body>
+                </html>
+            `;
+        }
+
+        function downloadFile(content, filename) {
+            const blob = new Blob([content], { type: 'text/html' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout? Any unsaved changes will be lost.')) {
+                currentUser = null;
+                userRole = null;
+                
+                document.getElementById('userInfo').style.display = 'none';
+                document.getElementById('loginScreen').style.display = 'block';
+                document.getElementById('dashboard').classList.remove('active');
+                
+                // Clear form
+                document.getElementById('userRole').value = '';
+                document.getElementById('userName').value = '';
+                
+                // Reset views
+                document.getElementById('staffView').style.display = 'none';
+                document.getElementById('adminView').style.display = 'none';
+            }
+        }
+
+        // Auto-save functionality for staff
+        function setupAutoSave() {
+            if (userRole !== 'admin') {
+                setInterval(() => {
+                    if (document.activeElement && 
+                        (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') &&
+                        (document.getElementById('staffActivities').value.trim() || document.getElementById('staffOutcomes').value.trim())) {
+                        saveStaffLog();
+                    }
+                }, 120000); // Auto-save every 2 minutes when typing
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('entryModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEntryModal();
+            }
+        });
+
+        // Initialize the application
+        init();
+        setTimeout(setupAutoSave, 5000);
+    </script>
+</body>
+</html>
