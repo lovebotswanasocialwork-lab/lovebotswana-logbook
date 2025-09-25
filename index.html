@@ -495,49 +495,7 @@
             </div>
         </div>
 
-        <!-- Setup Instructions -->
-        <div class="setup-notice">
-            <h3>📋 Google Sheets Setup Required</h3>
-            <p>To enable permanent data storage, you need to set up Google Sheets integration.</p>
-            <p><strong>Current Status:</strong> <span id="connectionStatus" style="color: #dc3545;">Not Connected</span></p>
-        </div>
 
-        <div class="setup-steps">
-            <h4>🔧 Setup Instructions:</h4>
-            <ol>
-                <li><strong>Create Google Sheets:</strong>
-                    <ul>
-                        <li>Go to <a href="https://sheets.google.com" target="_blank">sheets.google.com</a></li>
-                        <li>Create a new spreadsheet</li>
-                        <li>Name it "Love Botswana Daily Logbook"</li>
-                        <li>Add these column headers in Row 1: Date, Time, Staff Name, Activity Type, Activities, Outcomes, People Served, Duration, Challenges, Notes, Follow Up</li>
-                    </ul>
-                </li>
-                <li><strong>Make it Public:</strong>
-                    <ul>
-                        <li>Click "Share" button (top right)</li>
-                        <li>Click "Change to anyone with the link"</li>
-                        <li>Set permission to "Editor"</li>
-                        <li>Click "Copy link"</li>
-                    </ul>
-                </li>
-                <li><strong>Get Sheet ID:</strong>
-                    <ul>
-                        <li>From your Google Sheets URL, copy the ID between "/d/" and "/edit"</li>
-                        <li>Example: https://docs.google.com/spreadsheets/d/<strong>SHEET_ID_HERE</strong>/edit</li>
-                    </ul>
-                </li>
-                <li><strong>Configure Below:</strong>
-                    <div style="margin-top: 10px;">
-                        <input type="text" id="sheetsId" placeholder="Paste your Google Sheets ID here" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
-                        <button onclick="connectGoogleSheets()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Connect Google Sheets</button>
-                    </div>
-                </li>
-            </ol>
-            <p style="margin-top: 15px; font-size: 14px; color: #6c757d;">
-                <strong>Note:</strong> This connects your logbook to Google Sheets for permanent storage. All daily entries will be automatically saved and accessible to supervisors at any time.
-            </p>
-        </div>
 
         <!-- Login Screen -->
         <div class="login-container" id="loginScreen">
