@@ -126,6 +126,11 @@
             cursor: pointer; font-size: 11px; margin-left: 10px;
         }
         
+        .debug-info {
+            background: #f8f9fa; padding: 15px; margin: 15px 0; border-radius: 8px; 
+            border-left: 4px solid #17a2b8; font-family: monospace; font-size: 12px;
+        }
+        
         @media (max-width: 768px) {
             .dashboard-grid { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
@@ -263,11 +268,11 @@
                 <div class="dashboard-grid">
                     <div class="stats-card">
                         <div class="stats-number" id="totalEntries">0</div>
-                        <div class="stats-label">Daily Entries</div>
+                        <div class="stats-label">Total Entries</div>
                     </div>
                     <div class="stats-card">
                         <div class="stats-number" id="totalPeopleServed">0</div>
-                        <div class="stats-label">People Served Today</div>
+                        <div class="stats-label">People Served</div>
                     </div>
                     <div class="stats-card">
                         <div class="stats-number" id="activeStaff">0</div>
@@ -280,15 +285,21 @@
                 </div>
 
                 <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
-                    <button class="export-btn" onclick="loadFromGoogleSheets()">Refresh from Google Sheets</button>
-                    <button class="save-btn" onclick="exportDailySummary()">Export Daily Summary</button>
+                    <button class="export-btn" onclick="loadAllEntries()">Load All Entries</button>
+                    <button class="save-btn" onclick="testConnection()">Test Connection</button>
                     <button class="export-btn" onclick="openGoogleSheets()">Open Google Sheets</button>
+                    <button class="clear-btn" onclick="clearDebugInfo()">Clear Debug</button>
+                </div>
+
+                <div id="debugInfo" class="debug-info" style="display: none;">
+                    <strong>Debug Information:</strong><br>
+                    <div id="debugContent"></div>
                 </div>
 
                 <h3 class="section-title">All Team Log Entries</h3>
                 <div class="daily-entries" id="centralLogEntries">
                     <div style="text-align: center; padding: 40px; color: #666;">
-                        Click "Refresh from Google Sheets" to load all entries
+                        Click "Load All Entries" to retrieve data from Google Sheets
                     </div>
                 </div>
             </div>
@@ -317,6 +328,40 @@
             const today = new Date().toISOString().split('T')[0];
             currentDate = today;
             document.getElementById('logDate').value = today;
+        }
+
+        function addDebugInfo(message) {
+            const debugDiv = document.getElementById('debugInfo');
+            const debugContent = document.getElementById('debugContent');
+            debugDiv.style.display = 'block';
+            debugContent.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '<br>';
+        }
+
+        function clearDebugInfo() {
+            document.getElementById('debugContent').innerHTML = '';
+            document.getElementById('debugInfo').style.display = 'none';
+        }
+
+        async function testConnection() {
+            addDebugInfo('Testing connection to Google Apps Script...');
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'test');
+                
+                const response = await fetch('https://script.google.com/macros/s/AKfycbw0gOA70MBHSpIhjCDdiGiy4UphAQ6uKQVdw2QFvVMTvHeWhaIAtq1l0LvQEtn5GuK5/exec', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                addDebugInfo(`Response status: ${response.status}`);
+                
+                const result = await response.json();
+                addDebugInfo(`Response data: ${JSON.stringify(result)}`);
+                
+            } catch (error) {
+                addDebugInfo(`Connection error: ${error.message}`);
+            }
         }
 
         function login(event) {
@@ -368,7 +413,8 @@
             document.getElementById('staffView').style.display = 'none';
             document.getElementById('adminView').style.display = 'block';
             document.getElementById('pastLogsView').style.display = 'none';
-            loadFromGoogleSheets();
+            clearDebugInfo();
+            addDebugInfo('Administrator view loaded. Click "Test Connection" to verify Google Sheets connectivity.');
         }
 
         function viewMyPastLogs() {
@@ -386,8 +432,79 @@
         function loadDateData() {
             currentDate = document.getElementById('logDate').value;
             if (userRole === 'admin') {
-                loadFromGoogleSheets();
+                loadAllEntries();
             }
+        }
+
+        async function loadAllEntries() {
+            const container = document.getElementById('centralLogEntries');
+            container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">Loading all entries...</div>';
+            
+            addDebugInfo('Starting to load all entries...');
+
+            // Try multiple approaches with detailed logging
+            const methods = [
+                { name: 'getMyLogs with empty filters', data: { action: 'getMyLogs', staffName: '', activityType: '' } },
+                { name: 'getTodaysEntries with empty date', data: { action: 'getTodaysEntries', date: '' } },
+                { name: 'getTodaysEntries with specific date', data: { action: 'getTodaysEntries', date: currentDate } },
+                { name: 'getAllEntries', data: { action: 'getAllEntries' } }
+            ];
+
+            for (const method of methods) {
+                try {
+                    addDebugInfo(`Trying method: ${method.name}`);
+                    
+                    const formData = new FormData();
+                    Object.keys(method.data).forEach(key => {
+                        formData.append(key, method.data[key]);
+                    });
+
+                    const response = await fetch('https://script.google.com/macros/s/AKfycbw0gOA70MBHSpIhjCDdiGiy4UphAQ6uKQVdw2QFvVMTvHeWhaIAtq1l0LvQEtn5GuK5/exec', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    addDebugInfo(`${method.name} - Response status: ${response.status}`);
+                    
+                    const result = await response.json();
+                    addDebugInfo(`${method.name} - Response: ${JSON.stringify(result).substring(0, 200)}...`);
+
+                    if (result.success && result.data && Array.isArray(result.data) && result.data.length > 0) {
+                        addDebugInfo(`SUCCESS with ${method.name}! Found ${result.data.length} entries`);
+                        centralLogEntries = result.data;
+                        updateDashboardStats(result.data);
+                        displayCentralEntries(result.data);
+                        return; // Success!
+                    } else {
+                        addDebugInfo(`${method.name} returned no usable data`);
+                    }
+                } catch (error) {
+                    addDebugInfo(`${method.name} failed: ${error.message}`);
+                }
+            }
+
+            // If we get here, all methods failed
+            addDebugInfo('All loading methods failed. Showing fallback message.');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #666;">
+                    <h3 style="color: #dc3545; margin-bottom: 20px;">Unable to Load Entries</h3>
+                    <p>All automatic loading methods failed. This could be due to:</p>
+                    <ul style="text-align: left; margin: 20px auto; max-width: 400px;">
+                        <li>Google Apps Script not responding</li>
+                        <li>No entries exist in the spreadsheet yet</li>
+                        <li>Network connectivity issues</li>
+                        <li>Missing script handlers</li>
+                    </ul>
+                    <p><strong>Manual Solutions:</strong></p>
+                    <button class="export-btn" onclick="openGoogleSheets()" style="margin: 10px;">
+                        View Google Sheets Directly
+                    </button>
+                    <button class="save-btn" onclick="testConnection()" style="margin: 10px;">
+                        Test Connection Again
+                    </button>
+                </div>
+            `;
+            updateDashboardStats([]);
         }
 
         async function saveToGoogleSheets() {
@@ -442,8 +559,7 @@
                 if (confirm(`Unable to auto-save. Copy this data to your clipboard?\n\n${manualEntry}`)) {
                     navigator.clipboard.writeText(manualEntry).then(() => {
                         alert('Data copied to clipboard. Paste it into your Google Sheet.');
-                    }).catch(() => {
-                        alert('Please manually copy this data to your Google Sheet:\n\n' + manualEntry);
+                    }).catch(() => {alert('Please manually copy this data to your Google Sheet:\n\n' + manualEntry);
                     });
                 }
             }
@@ -532,8 +648,7 @@
                             <div style="font-size: 1.8em; font-weight: bold; color: #28a745;">${totalPeople}</div>
                             <div style="color: #666; font-size: 0.85em;">People Served</div>
                         </div>
-                        <div style="text-align: center; background:
-<div style="text-align: center; background: white; padding: 15px; border-radius: 8px; 
+                        <div style="text-align: center; background: white; padding: 15px; border-radius: 8px; 
                                    box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                             <div style="font-size: 1.8em; font-weight: bold; color: #17a2b8;">${totalHours.toFixed(1)}</div>
                             <div style="color: #666; font-size: 0.85em;">Total Hours</div>
@@ -666,82 +781,6 @@
             downloadFile(htmlContent, `Log_${log.activityType.replace(/\s+/g, '_')}_${log.date}.html`);
         }
 
-        async function loadFromGoogleSheets() {
-            const container = document.getElementById('centralLogEntries');
-            container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">Loading all entries...</div>';
-
-            try {
-                // Try multiple approaches to get all data
-                const attempts = [
-                    { action: 'getAllEntries' },
-                    { action: 'getTodaysEntries', date: '' }, // Empty date to get all
-                    { action: 'getMyLogs', staffName: '', activityType: '' } // Empty filters to get all
-                ];
-
-                let result = null;
-                
-                for (const attempt of attempts) {
-                    try {
-                        const formData = new FormData();
-                        Object.keys(attempt).forEach(key => {
-                            formData.append(key, attempt[key]);
-                        });
-
-                        const response = await fetch('https://script.google.com/macros/s/AKfycbw0gOA70MBHSpIhjCDdiGiy4UphAQ6uKQVdw2QFvVMTvHeWhaIAtq1l0LvQEtn5GuK5/exec', {
-                            method: 'POST',
-                            body: formData
-                        });
-
-                        const attemptResult = await response.json();
-                        
-                        if (attemptResult.success && attemptResult.data && attemptResult.data.length > 0) {
-                            result = attemptResult;
-                            break; // Success! Use this result
-                        }
-                    } catch (e) {
-                        console.log(`Attempt failed:`, attempt, e);
-                        continue; // Try next approach
-                    }
-                }
-
-                if (result && result.success && result.data) {
-                    centralLogEntries = result.data;
-                    // Filter entries for the selected date for stats, but show all in the list
-                    const todaysEntries = result.data.filter(entry => entry.date === currentDate);
-                    updateDashboardStats(todaysEntries);
-                    displayCentralEntries(result.data); // Show all entries
-                } else {
-                    throw new Error('No data found from any method');
-                }
-            } catch (error) {
-                console.error('All load attempts failed:', error);
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: #666;">
-                        <div style="font-size: 3em; margin-bottom: 20px; opacity: 0.3;">📊</div>
-                        <h3 style="color: #333; margin-bottom: 15px;">Unable to load entries automatically</h3>
-                        <p>The system couldn't retrieve entries from Google Sheets.</p>
-                        <p><strong>Manual Access:</strong></p>
-                        <a href="https://docs.google.com/spreadsheets/d/${sheetsId}/edit" target="_blank" 
-                           style="display: inline-block; margin: 15px 10px; padding: 12px 20px; 
-                                  background: #667eea; color: white; text-decoration: none; 
-                                  border-radius: 8px; font-weight: 600;">
-                            Open Google Sheets Directly →
-                        </a>
-                        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; text-align: left;">
-                            <p><strong>Troubleshooting Steps:</strong></p>
-                            <ol style="margin: 10px 0; padding-left: 20px;">
-                                <li>Check if Google Sheets is accessible</li>
-                                <li>Verify entries exist in the spreadsheet</li>
-                                <li>Ensure the Google Apps Script is running</li>
-                                <li>Try refreshing the page</li>
-                            </ol>
-                        </div>
-                    </div>
-                `;
-                updateDashboardStats([]);
-            }
-        }
-
         function updateDashboardStats(entries) {
             document.getElementById('totalEntries').textContent = entries.length;
             const totalPeople = entries.reduce((sum, entry) => sum + (parseInt(entry.peopleServed) || 0), 0);
@@ -762,6 +801,7 @@
 
             // Sort entries by date (newest first)
             const sortedEntries = entries.sort((a, b) => new Date(b.date) - new Date(a.date));
+            addDebugInfo(`Displaying ${sortedEntries.length} entries`);
 
             container.innerHTML = sortedEntries.map(entry => `
                 <div style="background: white; border: 1px solid #e0e6ed; border-radius: 12px; 
@@ -942,7 +982,7 @@
                 userRole = null;
                 document.getElementById('userInfo').style.display = 'none';
                 document.getElementById('loginScreen').style.display = 'block';
-                document.getElementById('dashboard').classList.remove('active');
+                document.getElementById('dashboard').classList.classList.remove('active');
                 document.getElementById('userRole').value = '';
                 document.getElementById('userName').value = '';
                 document.getElementById('staffView').style.display = 'none';
@@ -955,6 +995,7 @@
                 });
                 document.getElementById('saveStatus').textContent = 'Ready to Log';
                 document.getElementById('saveStatus').className = 'status-indicator status-ready';
+                clearDebugInfo();
             }
         }
 
