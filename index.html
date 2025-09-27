@@ -349,7 +349,7 @@
                 const formData = new FormData();
                 formData.append('action', 'test');
                 
-                const response = await fetch('https://script.google.com/macros/s/AKfycbw0gOA70MBHSpIhjCDdiGiy4UphAQ6uKQVdw2QFvVMTvHeWhaIAtq1l0LvQEtn5GuK5/exec', {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbxOBFd50VWteiHsATWTXIJv1q7aLWRZR0uku-zZgZfb-VwigCGVBzDy4Q9z49OLnvJDYg/exec', {
                     method: 'POST',
                     body: formData
                 });
@@ -459,7 +459,7 @@
                         formData.append(key, method.data[key]);
                     });
 
-                    const response = await fetch('https://script.google.com/macros/s/AKfycbw0gOA70MBHSpIhjCDdiGiy4UphAQ6uKQVdw2QFvVMTvHeWhaIAtq1l0LvQEtn5GuK5/exec', {
+                    const response = await fetch('https://script.google.com/macros/s/AKfycbxOBFd50VWteiHsATWTXIJv1q7aLWRZR0uku-zZgZfb-VwigCGVBzDy4Q9z49OLnvJDYg/exec', {
                         method: 'POST',
                         body: formData
                     });
@@ -531,7 +531,7 @@
             formData.append('followUp', document.getElementById('staffFollowUp').value.trim());
 
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbw0gOA70MBHSpIhjCDdiGiy4UphAQ6uKQVdw2QFvVMTvHeWhaIAtq1l0LvQEtn5GuK5/exec', {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbxOBFd50VWteiHsATWTXIJv1q7aLWRZR0uku-zZgZfb-VwigCGVBzDy4Q9z49OLnvJDYg/exec', {
                     method: 'POST',
                     body: formData
                 });
@@ -575,7 +575,7 @@
                 formData.append('staffName', currentUser);
                 formData.append('activityType', getRoleDisplayName(userRole));
 
-                const response = await fetch('https://script.google.com/macros/s/AKfycbw0gOA70MBHSpIhjCDdiGiy4UphAQ6uKQVdw2QFvVMTvHeWhaIAtq1l0LvQEtn5GuK5/exec', {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbxOBFd50VWteiHsATWTXIJv1q7aLWRZR0uku-zZgZfb-VwigCGVBzDy4Q9z49OLnvJDYg/exec', {
                     method: 'POST',
                     body: formData
                 });
