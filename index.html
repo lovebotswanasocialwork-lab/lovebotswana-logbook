@@ -403,6 +403,51 @@
             loadMyPastLogs();
         }
 
+        async function loadMyPastLogs() {
+            const container = document.getElementById('myPastLogsList');
+            container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">Loading your past entries...</div>';
+
+            debugLog('Loading past logs for user', { user: currentUser, activity: getRoleDisplayName(userRole) });
+
+            try {
+                const formData = new FormData();
+                formData.append('action', 'getMyLogs');
+                formData.append('staffName', currentUser);
+                formData.append('activityType', getRoleDisplayName(userRole));
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                debugLog('Past logs response', {
+                    status: response.status,
+                    statusText: response.statusText
+                });
+
+                const result = await response.json();
+                debugLog('Past logs result', result);
+
+                if (result.success && result.data) {
+                    window.myPastLogs = result.data;
+                    displayMyPastLogs(result.data);
+                } else {
+                    throw new Error(result.error || 'Failed to load data');
+                }
+            } catch (error) {
+                debugLog('Past logs error', error.message);
+                console.error('Load error:', error);
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <p>Unable to load past logs automatically.</p>
+                        <p><strong>Debug Info:</strong> Searching for user "${currentUser}"</p>
+                        <p><strong>Alternative:</strong> <a href="https://docs.google.com/spreadsheets/d/${sheetsId}/edit" target="_blank">Click here to view your entries directly in Google Sheets</a></p>
+                        <p>Filter by your name: ${currentUser}</p>
+                    </div>
+                `;
+            }
+        }
+
         function backToStaffView() {
             showStaffView();
         }
