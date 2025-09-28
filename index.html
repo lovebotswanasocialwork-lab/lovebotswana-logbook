@@ -33,62 +33,74 @@
         .mobile-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 10px 15px;
+            padding: 6px 12px;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         
-        .header-top {
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            min-height: 44px;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            min-width: 0;
         }
         
         .mobile-logo {
-            height: 35px;
-            width: 35px;
-            border-radius: 6px;
+            height: 28px;
+            width: 28px;
+            border-radius: 4px;
             background: white;
-            padding: 3px;
+            padding: 2px;
+            flex-shrink: 0;
         }
         
         .mobile-title {
-            font-size: 1.1em;
+            font-size: 0.9em;
             font-weight: 600;
-            flex: 1;
-            margin-left: 10px;
-            line-height: 1.2;
+            margin-left: 8px;
+            line-height: 1.1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .user-badge {
             background: rgba(255,255,255,0.15);
-            padding: 6px 10px;
-            border-radius: 15px;
-            font-size: 0.8em;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            flex-shrink: 0;
         }
         
         .logout-btn {
             background: #dc3545;
             color: white;
             border: none;
-            padding: 4px 8px;
-            border-radius: 12px;
+            padding: 3px 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 0.7em;
             font-weight: 600;
-            min-height: 24px;
+            min-height: 20px;
         }
         
-        .header-info {
-            font-size: 0.75em;
+        .header-date {
+            font-size: 0.65em;
             opacity: 0.9;
             text-align: center;
+            margin-top: 2px;
         }
         
         /* Login Screen Mobile */
@@ -171,9 +183,9 @@
         
         /* Main Content Mobile */
         .main-content {
-            padding: 15px;
+            padding: 12px;
             display: none;
-            min-height: calc(100vh - 80px);
+            min-height: calc(100vh - 60px);
         }
         
         .main-content.active {
@@ -182,56 +194,56 @@
         
         .mobile-date-selector {
             background: #f8f9fa;
-            padding: 15px;
+            padding: 12px;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
         
         .date-row {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
         }
         
         .date-label {
             font-weight: 600;
             color: #333;
-            font-size: 0.9em;
-            min-width: 70px;
+            font-size: 0.85em;
+            min-width: 65px;
         }
         
         .date-input {
             flex: 1;
-            padding: 10px;
+            padding: 8px;
             border: 2px solid #e0e6ed;
             border-radius: 8px;
             font-size: 14px;
         }
         
         .load-date-btn {
-            padding: 10px 15px;
+            padding: 8px 12px;
             background: #667eea;
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            min-height: 40px;
+            min-height: 36px;
         }
         
         .status-row {
             display: flex;
             justify-content: center;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         
         .status-indicator {
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
             font-weight: 600;
             text-transform: uppercase;
         }
@@ -242,24 +254,24 @@
         .status-error { background: #f8d7da; color: #721c24; }
         
         .section-title {
-            font-size: 1.2em;
+            font-size: 1.1em;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 600;
             border-bottom: 3px solid #667eea;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
         }
         
         .mobile-form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         
         .mobile-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #444;
             font-weight: 600;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
         
         .required {
@@ -268,12 +280,12 @@
         
         .mobile-textarea {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             border: 2px solid #e0e6ed;
             border-radius: 12px;
             font-size: 16px;
             font-family: inherit;
-            min-height: 100px;
+            min-height: 90px;
             resize: vertical;
             transition: all 0.3s ease;
         }
@@ -287,13 +299,13 @@
         .mobile-form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 18px;
         }
         
         .mobile-number-input {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 2px solid #e0e6ed;
             border-radius: 12px;
             font-size: 16px;
@@ -309,14 +321,14 @@
         .mobile-action-buttons {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 25px;
-            padding-top: 20px;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 15px;
             border-top: 2px solid #f0f0f0;
         }
         
         .mobile-action-buttons .mobile-btn {
-            min-height: 50px;
+            min-height: 48px;
             font-size: 15px;
         }
         
@@ -324,28 +336,28 @@
         .mobile-dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
         
         .mobile-stats-card {
             background: #f8f9fa;
-            padding: 20px 15px;
+            padding: 15px 12px;
             border-radius: 12px;
             border-left: 4px solid #667eea;
             text-align: center;
         }
         
         .stats-number {
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: 700;
             color: #667eea;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
         
         .stats-label {
             color: #666;
-            font-size: 0.8em;
+            font-size: 0.75em;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -355,12 +367,12 @@
             border: 1px solid #e0e6ed;
             border-radius: 12px;
             overflow: hidden;
-            max-height: 60vh;
+            max-height: 55vh;
             overflow-y: auto;
         }
         
         .mobile-entry-item {
-            padding: 15px;
+            padding: 12px;
             border-bottom: 1px solid #f0f0f0;
             transition: background-color 0.3s ease;
         }
@@ -377,30 +389,30 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .entry-user {
             font-weight: 600;
             color: #333;
-            font-size: 0.95em;
+            font-size: 0.9em;
         }
         
         .entry-activity {
             background: #e8f4f8;
             color: #0c5460;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.65em;
             font-weight: 600;
             text-transform: uppercase;
         }
         
         .entry-summary {
             color: #666;
-            font-size: 0.85em;
-            margin-bottom: 8px;
-            line-height: 1.4;
+            font-size: 0.8em;
+            margin-bottom: 6px;
+            line-height: 1.3;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -412,7 +424,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.75em;
+            font-size: 0.7em;
             color: #888;
         }
         
@@ -425,74 +437,62 @@
             background: #28a745;
             color: white;
             border: none;
-            padding: 6px 10px;
+            padding: 4px 8px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.7em;
+            font-size: 0.65em;
             font-weight: 600;
-        }
-        
-        .debug-info {
-            background: #f8f9fa;
-            padding: 12px;
-            margin: 15px 0;
-            border-radius: 8px;
-            border-left: 4px solid #17a2b8;
-            font-family: monospace;
-            font-size: 0.75em;
-            max-height: 200px;
-            overflow-y: auto;
         }
         
         /* Past Logs View Mobile */
         .past-logs-actions {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
         }
         
         .mobile-summary-card {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 20px;
+            padding: 15px;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-left: 5px solid #667eea;
         }
         
         .summary-title {
             color: #333;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.1em;
+            gap: 8px;
+            font-size: 1em;
             font-weight: 600;
         }
         
         .summary-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 8px;
         }
         
         .summary-stat {
             text-align: center;
             background: white;
-            padding: 12px 8px;
+            padding: 10px 6px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .summary-stat-number {
-            font-size: 1.4em;
+            font-size: 1.3em;
             font-weight: bold;
             color: #667eea;
         }
         
         .summary-stat-label {
             color: #666;
-            font-size: 0.75em;
+            font-size: 0.7em;
             margin-top: 2px;
         }
         
@@ -500,7 +500,7 @@
             background: white;
             border: 1px solid #e0e6ed;
             border-radius: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         }
@@ -508,7 +508,7 @@
         .mobile-log-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 12px 15px;
+            padding: 10px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -516,29 +516,29 @@
         
         .log-date-info {
             font-weight: 600;
-            font-size: 0.95em;
+            font-size: 0.9em;
         }
         
         .log-time-info {
             opacity: 0.9;
-            font-size: 0.8em;
+            font-size: 0.75em;
             margin-top: 2px;
         }
         
         .log-stats-badge {
             background: rgba(255,255,255,0.2);
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.75em;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
             font-weight: 600;
         }
         
         .mobile-log-content {
-            padding: 15px;
+            padding: 12px;
         }
         
         .log-section {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         
         .log-section:last-child {
@@ -547,18 +547,18 @@
         
         .log-section-title {
             color: #667eea;
-            margin: 0 0 8px 0;
-            font-size: 0.85em;
+            margin: 0 0 6px 0;
+            font-size: 0.8em;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         
         .section-badge {
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.65em;
             font-weight: 600;
         }
         
@@ -570,19 +570,19 @@
         
         .log-section-content {
             background: #f8f9fa;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
             border-left: 3px solid #667eea;
-            line-height: 1.5;
+            line-height: 1.4;
             color: #555;
-            font-size: 0.85em;
+            font-size: 0.8em;
         }
         
         .log-actions {
             display: flex;
-            gap: 8px;
-            margin-top: 15px;
-            padding-top: 12px;
+            gap: 6px;
+            margin-top: 12px;
+            padding-top: 10px;
             border-top: 1px solid #f0f0f0;
         }
         
@@ -590,27 +590,27 @@
             background: #667eea;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.75em;
+            font-size: 0.7em;
             font-weight: 600;
             flex: 1;
         }
         
         /* Instructions Mobile */
         .mobile-instructions {
-            margin-top: 20px;
-            font-size: 0.8em;
+            margin-top: 15px;
+            font-size: 0.75em;
             color: #666;
             text-align: center;
-            line-height: 1.4;
+            line-height: 1.3;
         }
         
         .instructions-title {
             font-weight: 600;
             color: #333;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         /* Responsive adjustments */
@@ -621,20 +621,20 @@
             
             .mobile-dashboard-grid {
                 grid-template-columns: 1fr;
-                gap: 10px;
+                gap: 8px;
             }
             
             .summary-stats {
                 grid-template-columns: 1fr;
-                gap: 8px;
+                gap: 6px;
             }
             
             .mobile-title {
-                font-size: 1em;
+                font-size: 0.8em;
             }
             
             .main-content {
-                padding: 10px;
+                padding: 8px;
             }
         }
         
@@ -642,11 +642,15 @@
             .entry-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 5px;
+                gap: 4px;
             }
             
             .log-actions {
                 flex-direction: column;
+            }
+            
+            .mobile-title {
+                font-size: 0.75em;
             }
         }
         
@@ -660,14 +664,14 @@
         /* Hide elements when keyboard is open */
         @media (max-height: 500px) and (orientation: landscape) {
             .mobile-header {
-                padding: 5px 15px;
+                padding: 4px 12px;
             }
             
             .mobile-title {
-                font-size: 0.9em;
+                font-size: 0.75em;
             }
             
-            .header-info {
+            .header-date {
                 display: none;
             }
         }
@@ -676,8 +680,8 @@
 <body>
     <div class="mobile-container">
         <div class="mobile-header">
-            <div class="header-top">
-                <div style="display: flex; align-items: center; flex: 1;">
+            <div class="header-content">
+                <div class="header-left">
                     <img src="https://lovebotswana.org/wp-content/uploads/2021/06/cropped-Love-Botswana-Logo-300x300.png" 
                          alt="LBOM Logo" 
                          class="mobile-logo"
@@ -689,7 +693,7 @@
                     <button class="logout-btn" onclick="logout()">Logout</button>
                 </div>
             </div>
-            <div class="header-info" id="currentDate"></div>
+            <div class="header-date" id="currentDate"></div>
         </div>
 
         <!-- Login Screen -->
@@ -792,7 +796,7 @@
                 </div>
 
                 <div class="mobile-entries-container" id="myPastLogsList">
-                    <div style="text-align: center; padding: 40px; color: #666;">
+                    <div style="text-align: center; padding: 30px; color: #666;">
                         Click "Refresh My Logs" to load your past entries
                     </div>
                 </div>
@@ -821,19 +825,12 @@
 
                 <div class="mobile-action-buttons">
                     <button class="mobile-btn secondary" onclick="loadAllEntries()">Load All Entries</button>
-                    <button class="mobile-btn" onclick="testConnection()">Test Connection</button>
                     <button class="mobile-btn secondary" onclick="openGoogleSheets()">Open Google Sheets</button>
-                    <button class="mobile-btn danger" onclick="clearDebugInfo()">Clear Debug</button>
-                </div>
-
-                <div id="debugInfo" class="debug-info" style="display: none;">
-                    <strong>Debug Information:</strong><br>
-                    <div id="debugContent"></div>
                 </div>
 
                 <h3 class="section-title">All Team Log Entries</h3>
                 <div class="mobile-entries-container" id="centralLogEntries">
-                    <div style="text-align: center; padding: 40px; color: #666;">
+                    <div style="text-align: center; padding: 30px; color: #666;">
                         Click "Load All Entries" to retrieve data from Google Sheets
                     </div>
                 </div>
@@ -885,40 +882,6 @@
             document.getElementById('logDate').value = today;
         }
 
-        function addDebugInfo(message) {function addDebugInfo(message) {
-            const debugDiv = document.getElementById('debugInfo');
-            const debugContent = document.getElementById('debugContent');
-            debugDiv.style.display = 'block';
-            debugContent.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '<br>';
-        }
-
-        function clearDebugInfo() {
-            document.getElementById('debugContent').innerHTML = '';
-            document.getElementById('debugInfo').style.display = 'none';
-        }
-
-        async function testConnection() {
-            addDebugInfo('Testing connection to Google Apps Script...');
-            
-            try {
-                const formData = new FormData();
-                formData.append('action', 'test');
-                
-                const response = await fetch('https://script.google.com/macros/s/AKfycbxOBFd50VWteiHsATWTXIJv1q7aLWRZR0uku-zZgZfb-VwigCGVBzDy4Q9z49OLnvJDYg/exec', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                addDebugInfo(`Response status: ${response.status}`);
-                
-                const result = await response.json();
-                addDebugInfo(`Response data: ${JSON.stringify(result)}`);
-                
-            } catch (error) {
-                addDebugInfo(`Connection error: ${error.message}`);
-            }
-        }
-
         function login(event) {
             event.preventDefault();
             userRole = document.getElementById('userRole').value;
@@ -931,7 +894,7 @@
 
             document.getElementById('currentUser').textContent = `${currentUser}`;
             document.getElementById('userInfo').style.display = 'flex';
-            document.getElementById('loginScreen').style.display = 'none';
+document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('dashboard').classList.add('active');
             
             if (userRole === 'admin') {
@@ -968,8 +931,6 @@
             document.getElementById('staffView').style.display = 'none';
             document.getElementById('adminView').style.display = 'block';
             document.getElementById('pastLogsView').style.display = 'none';
-            clearDebugInfo();
-            addDebugInfo('Administrator view loaded. Click "Test Connection" to verify Google Sheets connectivity.');
         }
 
         function viewMyPastLogs() {
@@ -993,9 +954,7 @@
 
         async function loadAllEntries() {
             const container = document.getElementById('centralLogEntries');
-            container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">Loading all entries...</div>';
-            
-            addDebugInfo('Starting to load all entries...');
+            container.innerHTML = '<div style="text-align: center; padding: 30px; color: #666;">Loading all entries...</div>';
 
             const methods = [
                 { name: 'getMyLogs with empty filters', data: { action: 'getMyLogs', staffName: '', activityType: '' } },
@@ -1006,8 +965,6 @@
 
             for (const method of methods) {
                 try {
-                    addDebugInfo(`Trying method: ${method.name}`);
-                    
                     const formData = new FormData();
                     Object.keys(method.data).forEach(key => {
                         formData.append(key, method.data[key]);
@@ -1018,41 +975,31 @@
                         body: formData
                     });
 
-                    addDebugInfo(`${method.name} - Response status: ${response.status}`);
-                    
                     const result = await response.json();
-                    addDebugInfo(`${method.name} - Response: ${JSON.stringify(result).substring(0, 200)}...`);
 
                     if (result.success && result.data && Array.isArray(result.data) && result.data.length > 0) {
-                        addDebugInfo(`SUCCESS with ${method.name}! Found ${result.data.length} entries`);
                         centralLogEntries = result.data;
                         updateDashboardStats(result.data);
                         displayCentralEntries(result.data);
                         return;
-                    } else {
-                        addDebugInfo(`${method.name} returned no usable data`);
                     }
                 } catch (error) {
-                    addDebugInfo(`${method.name} failed: ${error.message}`);
+                    console.log(`${method.name} failed: ${error.message}`);
                 }
             }
 
             container.innerHTML = `
-                <div style="text-align: center; padding: 40px; color: #666;">
-                    <h3 style="color: #dc3545; margin-bottom: 20px;">Unable to Load Entries</h3>
-                    <p style="margin-bottom: 15px;">All automatic loading methods failed. This could be due to:</p>
-                    <ul style="text-align: left; margin: 20px auto; max-width: 300px; font-size: 0.85em;">
+                <div style="text-align: center; padding: 30px; color: #666;">
+                    <h3 style="color: #dc3545; margin-bottom: 15px;">Unable to Load Entries</h3>
+                    <p style="margin-bottom: 12px;">All automatic loading methods failed. This could be due to:</p>
+                    <ul style="text-align: left; margin: 15px auto; max-width: 280px; font-size: 0.8em;">
                         <li>Google Apps Script not responding</li>
                         <li>No entries exist in the spreadsheet yet</li>
                         <li>Network connectivity issues</li>
-                        <li>Missing script handlers</li>
                     </ul>
-                    <div style="margin-top: 20px;">
-                        <button class="mobile-btn secondary" onclick="openGoogleSheets()" style="margin: 5px; font-size: 0.8em;">
+                    <div style="margin-top: 15px;">
+                        <button class="mobile-btn secondary" onclick="openGoogleSheets()" style="margin: 4px; font-size: 0.75em;">
                             View Google Sheets Directly
-                        </button>
-                        <button class="mobile-btn" onclick="testConnection()" style="margin: 5px; font-size: 0.8em;">
-                            Test Connection Again
                         </button>
                     </div>
                 </div>
@@ -1121,7 +1068,7 @@
 
         async function loadMyPastLogs() {
             const container = document.getElementById('myPastLogsList');
-            container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">Loading your past entries...</div>';
+            container.innerHTML = '<div style="text-align: center; padding: 30px; color: #666;">Loading your past entries...</div>';
 
             try {
                 const formData = new FormData();
@@ -1144,7 +1091,7 @@
                 }
             } catch (error) {
                 container.innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: #666;">
+                    <div style="text-align: center; padding: 30px; color: #666;">
                         <p>Unable to load past logs automatically.</p>
                         <p><strong>Debug Info:</strong> Searching for user "${currentUser}"</p>
                         <p><strong>Alternative:</strong> <a href="https://docs.google.com/spreadsheets/d/${sheetsId}/edit" target="_blank">Click here to view your entries directly in Google Sheets</a></p>
@@ -1159,11 +1106,11 @@
             
             if (!logs || logs.length === 0) {
                 container.innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: #666;">
-                        <div style="font-size: 2em; margin-bottom: 20px; opacity: 0.3;">📋</div>
-                        <h3 style="color: #333; margin-bottom: 15px;">No past entries found</h3>
+                    <div style="text-align: center; padding: 30px; color: #666;">
+                        <div style="font-size: 1.5em; margin-bottom: 15px; opacity: 0.3;">📋</div>
+                        <h3 style="color: #333; margin-bottom: 12px;">No past entries found</h3>
                         <p><strong>Searched for:</strong> "${currentUser}"</p>
-                        <p style="margin-bottom: 15px;">Make sure you're using the exact name from Google Sheets</p>
+                        <p style="margin-bottom: 12px;">Make sure you're using the exact name from Google Sheets</p>
                         <a href="https://docs.google.com/spreadsheets/d/${sheetsId}/edit" target="_blank" 
                            class="mobile-btn secondary" style="display: inline-block; text-decoration: none;">
                             Check Google Sheets
@@ -1180,9 +1127,9 @@
             container.innerHTML = `
                 <div class="mobile-summary-card">
                     <h3 class="summary-title">
-                        <span style="background: #667eea; color: white; padding: 8px; border-radius: 50%; 
-                                     width: 30px; height: 30px; display: flex; align-items: center; 
-                                     justify-content: center; font-size: 14px;">📊</span>
+                        <span style="background: #667eea; color: white; padding: 6px; border-radius: 50%; 
+                                     width: 26px; height: 26px; display: flex; align-items: center; 
+                                     justify-content: center; font-size: 12px;">📊</span>
                         Your Activity Summary
                     </h3>
                     <div class="summary-stats">
@@ -1201,11 +1148,11 @@
                     </div>
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <h3 style="color: #333; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.1em;">
-                        <span style="background: #28a745; color: white; padding: 6px; border-radius: 50%; 
-                                     width: 30px; height: 30px; display: flex; align-items: center; 
-                                     justify-content: center; font-size: 14px;">📋</span>
+                <div style="margin-bottom: 12px;">
+                    <h3 style="color: #333; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; font-size: 1em;">
+                        <span style="background: #28a745; color: white; padding: 5px; border-radius: 50%; 
+                                     width: 26px; height: 26px; display: flex; align-items: center; 
+                                     justify-content: center; font-size: 12px;">📋</span>
                         Recent Activity Log Entries
                     </h3>
                 </div>
@@ -1316,19 +1263,18 @@
             const container = document.getElementById('centralLogEntries');
             
             if (!entries || entries.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">No entries found</div>';
+                container.innerHTML = '<div style="text-align: center; padding: 30px; color: #666;">No entries found</div>';
                 return;
             }
 
             const sortedEntries = entries.sort((a, b) => new Date(b.date) - new Date(a.date));
-            addDebugInfo(`Displaying ${sortedEntries.length} entries`);
 
             container.innerHTML = sortedEntries.map(entry => `
                 <div class="mobile-entry-item">
                     <div class="entry-header">
                         <div>
                             <div class="entry-user">${entry.staff || entry.staffName}</div>
-                            <div style="font-size: 0.75em; color: #888; margin-top: 2px;">
+                            <div style="font-size: 0.7em; color: #888; margin-top: 1px;">
                                 ${new Date(entry.date).toLocaleDateString()} at ${entry.time}
                             </div>
                         </div>
@@ -1336,11 +1282,11 @@
                     </div>
                     
                     <div class="entry-summary">
-                        <strong>Activities:</strong> ${(entry.activities || 'No activities specified').substring(0, 100)}${entry.activities && entry.activities.length > 100 ? '...' : ''}
+                        <strong>Activities:</strong> ${(entry.activities || 'No activities specified').substring(0, 80)}${entry.activities && entry.activities.length > 80 ? '...' : ''}
                     </div>
                     
                     <div class="entry-summary">
-                        <strong>Outcomes:</strong> ${(entry.outcomes || 'No outcomes specified').substring(0, 100)}${entry.outcomes && entry.outcomes.length > 100 ? '...' : ''}
+                        <strong>Outcomes:</strong> ${(entry.outcomes || 'No outcomes specified').substring(0, 80)}${entry.outcomes && entry.outcomes.length > 80 ? '...' : ''}
                     </div>
                     
                     <div class="entry-meta">
@@ -1358,70 +1304,70 @@
             modal.style.cssText = `
                 position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
                 background: rgba(0,0,0,0.5); z-index: 1000; display: flex; 
-                align-items: center; justify-content: center; padding: 20px;
+                align-items: center; justify-content: center; padding: 15px;
             `;
             
             modal.innerHTML = `
-                <div style="background: white; border-radius: 15px; max-width: 500px; 
-                           width: 100%; max-height: 80vh; overflow-y: auto;">
+                <div style="background: white; border-radius: 15px; max-width: 450px; 
+                           width: 100%; max-height: 85vh; overflow-y: auto;">
                     <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                               color: white; padding: 15px; border-radius: 15px 15px 0 0;">
+                               color: white; padding: 12px; border-radius: 15px 15px 0 0;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
-                                <div style="font-weight: 600; font-size: 1.1em;">${entry.staff || entry.staffName}</div>
-                                <div style="opacity: 0.9; font-size: 0.9em;">${new Date(entry.date).toLocaleDateString()} • ${entry.activity || entry.activityType}</div>
+                                <div style="font-weight: 600; font-size: 1em;">${entry.staff || entry.staffName}</div>
+                                <div style="opacity: 0.9; font-size: 0.85em;">${new Date(entry.date).toLocaleDateString()} • ${entry.activity || entry.activityType}</div>
                             </div>
                             <button onclick="this.closest('.modal').remove()" style="
                                 background: rgba(255,255,255,0.2); border: none; color: white; 
-                                padding: 8px 12px; border-radius: 50%; cursor: pointer; font-size: 16px;
+                                padding: 6px 10px; border-radius: 50%; cursor: pointer; font-size: 14px;
                             ">×</button>
                         </div>
                     </div>
                     
-                    <div style="padding: 20px;">
-                        <div style="margin-bottom: 15px;">
-                            <h4 style="color: #667eea; margin-bottom: 8px; font-size: 0.9em;">Activities Performed</h4>
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; border-left: 3px solid #667eea;">
+                    <div style="padding: 15px;">
+                        <div style="margin-bottom: 12px;">
+                            <h4 style="color: #667eea; margin-bottom: 6px; font-size: 0.85em;">Activities Performed</h4>
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; border-left: 3px solid #667eea; font-size: 0.8em;">
                                 ${entry.activities || 'No activities specified'}
                             </div>
                         </div>
                         
-                        <div style="margin-bottom: 15px;">
-                            <h4 style="color: #667eea; margin-bottom: 8px; font-size: 0.9em;">Key Outcomes</h4>
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; border-left: 3px solid #28a745;">
+                        <div style="margin-bottom: 12px;">
+                            <h4 style="color: #667eea; margin-bottom: 6px; font-size: 0.85em;">Key Outcomes</h4>
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; border-left: 3px solid #28a745; font-size: 0.8em;">
                                 ${entry.outcomes || 'No outcomes specified'}
                             </div>
                         </div>
                         
                         ${entry.challenges ? `
-                            <div style="margin-bottom: 15px;">
-                                <h4 style="color: #667eea; margin-bottom: 8px; font-size: 0.9em;">Challenges</h4>
-                                <div style="background: #fff3cd; padding: 12px; border-radius: 8px; border-left: 3px solid #ffc107;">
+                            <div style="margin-bottom: 12px;">
+                                <h4 style="color: #667eea; margin-bottom: 6px; font-size: 0.85em;">Challenges</h4>
+                                <div style="background: #fff3cd; padding: 10px; border-radius: 8px; border-left: 3px solid #ffc107; font-size: 0.8em;">
                                     ${entry.challenges}
                                 </div>
                             </div>
                         ` : ''}
 
                         ${entry.notes ? `
-                            <div style="margin-bottom: 15px;">
-                                <h4 style="color: #667eea; margin-bottom: 8px; font-size: 0.9em;">Notes</h4>
-                                <div style="background: #e8f4f8; padding: 12px; border-radius: 8px; border-left: 3px solid #17a2b8;">
+                            <div style="margin-bottom: 12px;">
+                                <h4 style="color: #667eea; margin-bottom: 6px; font-size: 0.85em;">Notes</h4>
+                                <div style="background: #e8f4f8; padding: 10px; border-radius: 8px; border-left: 3px solid #17a2b8; font-size: 0.8em;">
                                     ${entry.notes}
                                 </div>
                             </div>
                         ` : ''}
 
                         ${entry.followUp ? `
-                            <div style="margin-bottom: 15px;">
-                                <h4 style="color: #667eea; margin-bottom: 8px; font-size: 0.9em;">Follow-up Actions</h4>
-                                <div style="background: #f8d7da; padding: 12px; border-radius: 8px; border-left: 3px solid #dc3545;">
+                            <div style="margin-bottom: 12px;">
+                                <h4 style="color: #667eea; margin-bottom: 6px; font-size: 0.85em;">Follow-up Actions</h4>
+                                <div style="background: #f8d7da; padding: 10px; border-radius: 8px; border-left: 3px solid #dc3545; font-size: 0.8em;">
                                     ${entry.followUp}
                                 </div>
                             </div>
                         ` : ''}
                         
-                        <div style="text-align: center; margin-top: 20px;">
-                            <span style="color: #666; font-size: 0.8em;">
+                        <div style="text-align: center; margin-top: 15px;">
+                            <span style="color: #666; font-size: 0.75em;">
                                 ${entry.peopleServed || 0} people served • ${entry.duration || 0} minutes
                             </span>
                         </div>
@@ -1461,7 +1407,7 @@
         }
 
         function createDailyLogHTML(data) {
-            return `<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; margin: 20px; color: #333; background: #f8f9fa; } .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; } .header { text-align: center; border-bottom: 3px solid #667eea; padding-bottom: 20px; margin-bottom: 30px; } .logo { height: 60px; margin-bottom: 15px; } .field { margin-bottom: 20px; } .field-label { font-weight: bold; color: #667eea; margin-bottom: 8px; display: block; font-size: 0.9em; } .field-value { padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #667eea; white-space: pre-wrap; line-height: 1.5; } .stats-row { display: flex; justify-content: space-around; margin: 20px 0; padding: 15px; background: #e8f4f8; border-radius: 8px; } .stat { text-align: center; } .stat-number { font-weight: bold; color: #667eea; font-size: 1.2em; } .stat-label { font-size: 0.8em; color: #666; } @media (max-width: 600px) { body { margin: 10px; } .container { padding: 20px; } .stats-row { flex-direction: column; gap: 10px; } }</style></head><body><div class="container"><div class="header"><img src="https://lovebotswana.org/wp-content/uploads/2021/06/cropped-Love-Botswana-Logo-300x300.png" alt="LBOM Logo" class="logo" onerror="this.style.display='none'"><h1>LBOM - Social Work Department Daily Activity Log</h1><p><strong>Activity:</strong> ${data.activity} | <strong>Staff:</strong> ${data.staffName} | <strong>Date:</strong> ${new Date(data.date).toLocaleDateString()}</p></div><div class="stats-row"><div class="stat"><div class="stat-number">${data.peopleServed}</div><div class="stat-label">People Served</div></div><div class="stat"><div class="stat-number">${data.duration}</div><div class="stat-label">Minutes</div></div><div class="stat"><div class="stat-number">${(parseFloat(data.duration) / 60).toFixed(1)}</div><div class="stat-label">Hours</div></div></div><div class="field"><div class="field-label">Today's Activities</div><div class="field-value">${data.activities}</div></div><div class="field"><div class="field-label">Key Outcomes</div><div class="field-value">${data.outcomes}</div></div><div class="field"><div class="field-label">Challenges</div><div class="field-value">${data.challenges}</div></div><div class="field"><div class="field-label">Notes</div><div class="field-value">${data.notes}</div></div><div class="field"><div class="field-label">Follow-up Actions</div><div class="field-value">${data.followUp}</div></div><div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc;"><p><em>Exported on ${new Date().toLocaleString()}</em></p></div></div></body></html>`;
+            return `<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; margin: 15px; color: #333; background: #f8f9fa; } .container { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 700px; margin: 0 auto; } .header { text-align: center; border-bottom: 3px solid #667eea; padding-bottom: 15px; margin-bottom: 25px; } .logo { height: 50px; margin-bottom: 12px; } .field { margin-bottom: 15px; } .field-label { font-weight: bold; color: #667eea; margin-bottom: 6px; display: block; font-size: 0.85em; } .field-value { padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #667eea; white-space: pre-wrap; line-height: 1.4; font-size: 0.9em; } .stats-row { display: flex; justify-content: space-around; margin: 15px 0; padding: 12px; background: #e8f4f8; border-radius: 8px; } .stat { text-align: center; } .stat-number { font-weight: bold; color: #667eea; font-size: 1.1em; } .stat-label { font-size: 0.75em; color: #666; } @media (max-width: 600px) { body { margin: 8px; } .container { padding: 15px; } .stats-row { flex-direction: column; gap: 8px; } }</style></head><body><div class="container"><div class="header"><img src="https://lovebotswana.org/wp-content/uploads/2021/06/cropped-Love-Botswana-Logo-300x300.png" alt="LBOM Logo" class="logo" onerror="this.style.display='none'"><h1 style="font-size: 1.3em;">LBOM - Social Work Department Daily Activity Log</h1><p><strong>Activity:</strong> ${data.activity} | <strong>Staff:</strong> ${data.staffName} | <strong>Date:</strong> ${new Date(data.date).toLocaleDateString()}</p></div><div class="stats-row"><div class="stat"><div class="stat-number">${data.peopleServed}</div><div class="stat-label">People Served</div></div><div class="stat"><div class="stat-number">${data.duration}</div><div class="stat-label">Minutes</div></div><div class="stat"><div class="stat-number">${(parseFloat(data.duration) / 60).toFixed(1)}</div><div class="stat-label">Hours</div></div></div><div class="field"><div class="field-label">Today's Activities</div><div class="field-value">${data.activities}</div></div><div class="field"><div class="field-label">Key Outcomes</div><div class="field-value">${data.outcomes}</div></div><div class="field"><div class="field-label">Challenges</div><div class="field-value">${data.challenges}</div></div><div class="field"><div class="field-label">Notes</div><div class="field-value">${data.notes}</div></div><div class="field"><div class="field-label">Follow-up Actions</div><div class="field-value">${data.followUp}</div></div><div style="text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #ccc;"><p><em>Exported on ${new Date().toLocaleString()}</em></p></div></div></body></html>`;
         }
 
         function downloadFile(content, filename) {
@@ -1479,7 +1425,7 @@
                 document.querySelectorAll('#staffView input, #staffView textarea').forEach(field => {
                     field.value = '';
                 });
-                document.getElementById('saveStatus').textContent = 'Ready to Log';
+document.getElementById('saveStatus').textContent = 'Ready to Log';
                 document.getElementById('saveStatus').className = 'status-indicator status-ready';
             }
         }
@@ -1503,7 +1449,6 @@
                 });
                 document.getElementById('saveStatus').textContent = 'Ready to Log';
                 document.getElementById('saveStatus').className = 'status-indicator status-ready';
-                clearDebugInfo();
             }
         }
 
@@ -1512,7 +1457,7 @@
             // Add pull-to-refresh simulation
             let startY = 0;
             let currentY = 0;
-            let pullThreshold = 100;
+            let pullThreshold = 80;
             let isRefreshing = false;
 
             document.addEventListener('touchstart', function(e) {
@@ -1575,7 +1520,7 @@
                 if (e.target.matches('button, .mobile-btn, .mobile-view-btn, .mobile-export-btn')) {
                     // Vibrate if supported
                     if (navigator.vibrate) {
-                        navigator.vibrate(50);
+                        navigator.vibrate(30);
                     }
                     
                     // Visual feedback
@@ -1611,9 +1556,9 @@
                         const notification = document.createElement('div');
                         notification.textContent = 'Draft restored';
                         notification.style.cssText = `
-                            position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
-                            background: #28a745; color: white; padding: 8px 16px;
-                            border-radius: 20px; font-size: 0.8em; z-index: 1000;
+                            position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
+                            background: #28a745; color: white; padding: 6px 12px;
+                            border-radius: 15px; font-size: 0.75em; z-index: 1000;
                             animation: fadeInOut 2s ease-in-out;
                         `;
                         document.body.appendChild(notification);
@@ -1630,7 +1575,7 @@
             const style = document.createElement('style');
             style.textContent = `
                 @keyframes fadeInOut {
-                    0%, 100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                    0%, 100% { opacity: 0; transform: translateX(-50%) translateY(-15px); }
                     50% { opacity: 1; transform: translateX(-50%) translateY(0); }
                 }
             `;
@@ -1651,13 +1596,13 @@
                     indicator.textContent = 'Offline - Changes will be saved when reconnected';
                     indicator.style.cssText = `
                         position: fixed; top: 0; left: 0; right: 0; 
-                        background: #dc3545; color: white; padding: 8px;
-                        text-align: center; font-size: 0.8em; z-index: 1001;
+                        background: #dc3545; color: white; padding: 6px;
+                        text-align: center; font-size: 0.75em; z-index: 1001;
                     `;
                     document.body.appendChild(indicator);
                     
                     // Adjust header position
-                    document.querySelector('.mobile-header').style.marginTop = '40px';
+                    document.querySelector('.mobile-header').style.marginTop = '30px';
                 } else {
                     // Reset header position
                     const header = document.querySelector('.mobile-header');
