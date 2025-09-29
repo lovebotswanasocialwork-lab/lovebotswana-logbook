@@ -1069,13 +1069,10 @@
             const container = document.getElementById('myPastLogsList');
             container.innerHTML = '<div style="text-align: center; padding: 30px; color: #666;">Loading your past entries...</div>';
 
-            // Try multiple methods to retrieve the user's logs
+            // Use the same successful methods as loadAllEntries()
             const methods = [
-                // Method 1: Try with just staff name (most likely to work)
-                { name: 'staffName only', data: { action: 'getMyLogs', staffName: currentUser, activityType: '' } },
-                // Method 2: Try with staff name and activity type
-                { name: 'staffName + activityType', data: { action: 'getMyLogs', staffName: currentUser, activityType: getRoleDisplayName(userRole) } },
-                // Method 3: Get all entries and filter client-side
+                { name: 'getMyLogs with empty filters', data: { action: 'getMyLogs', staffName: '', activityType: '' } },
+                { name: 'getTodaysEntries with empty date', data: { action: 'getTodaysEntries', date: '' } },
                 { name: 'getAllEntries', data: { action: 'getAllEntries' } }
             ];
 
@@ -1093,22 +1090,21 @@
 
                     const result = await response.json();
 
-                    if (result.success && result.data && Array.isArray(result.data)) {
-                        let userLogs = result.data;
-                        
-                        // If we got all entries, filter client-side for this user
-                        if (method.name === 'getAllEntries') {
-                            userLogs = result.data.filter(entry => {
-                                const entryStaff = (entry.staff || entry.staffName || '').trim().toLowerCase();
-                                const currentUserLower = currentUser.trim().toLowerCase();
-                                return entryStaff === currentUserLower;
-                            });
-                        }
+                    if (result.success && result.data && Array.isArray(result.data) && result.data.length > 0) {
+                        // Filter for current user's entries
+                        const userLogs = result.data.filter(entry => {
+                            const entryStaff = (entry.staff || entry.staffName || '').trim().toLowerCase();
+                            const currentUserLower = currentUser.trim().toLowerCase();
+                            return entryStaff === currentUserLower;
+                        });
                         
                         if (userLogs.length > 0) {
                             window.myPastLogs = userLogs;
                             displayMyPastLogs(userLogs);
+                            console.log(`Successfully loaded ${userLogs.length} logs using ${method.name}`);
                             return; // Success! Exit the function
+                        } else {
+                            console.log(`${method.name} returned data but no matches for user: ${currentUser}`);
                         }
                     }
                 } catch (error) {
@@ -1116,25 +1112,28 @@
                 }
             }
 
-            // If all methods failed, show helpful error message
+            // If all methods failed or no entries found, show helpful error message
             container.innerHTML = `
                 <div style="text-align: center; padding: 30px; color: #666;">
                     <div style="font-size: 1.5em; margin-bottom: 15px; opacity: 0.3;">📋</div>
-                    <h3 style="color: #dc3545; margin-bottom: 12px;">Unable to Load Past Logs</h3>
+                    <h3 style="color: #dc3545; margin-bottom: 12px;">No Past Logs Found</h3>
                     <p style="margin-bottom: 8px;"><strong>Searching for:</strong> "${currentUser}"</p>
-                    <p style="font-size: 0.85em; margin-bottom: 15px;">This could mean:</p>
+                    <p style="font-size: 0.85em; margin-bottom: 15px;">Possible reasons:</p>
                     <ul style="text-align: left; margin: 15px auto; max-width: 280px; font-size: 0.8em; line-height: 1.6;">
-                        <li>No entries found for this name</li>
-                        <li>Name spelling doesn't match Google Sheets exactly</li>
-                        <li>Google Apps Script connection issue</li>
+                        <li>No entries saved yet for this name</li>
+                        <li>Name spelling doesn't match exactly</li>
+                        <li>Entries were saved under a different name</li>
                     </ul>
                     <div style="margin-top: 20px;">
                         <button class="mobile-btn secondary" onclick="openGoogleSheets()" style="font-size: 0.8em; padding: 10px 15px;">
-                            View Google Sheets Directly
+                            Check Google Sheets
+                        </button>
+                        <button class="mobile-btn" onclick="backToStaffView()" style="font-size: 0.8em; padding: 10px 15px; margin-top: 8px;">
+                            Back to Daily Log
                         </button>
                     </div>
                     <p style="margin-top: 15px; font-size: 0.75em; color: #888;">
-                        Tip: Make sure your name in Google Sheets matches exactly: ${currentUser}
+                        Save a new entry first, then check back here
                     </p>
                 </div>
             `;
