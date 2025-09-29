@@ -1420,16 +1420,14 @@
         }
 
         function clearStaffForm() {
-            if (confirm('Are you sure you want to clear all your log data? This will delete any unsaved changes.')) {
-                document.querySelectorAll('#staffView input, #staffView textarea').forEach(field => {
-                    field.value = '';
-document.querySelectorAll('#staffView input, #staffView textarea').forEach(field => {
-                    field.value = '';
-                });
-                document.getElementById('saveStatus').textContent = 'Ready to Log';
-                document.getElementById('saveStatus').className = 'status-indicator status-ready';
-            }
-        }
+			if (confirm('Are you sure you want to clear all your log data? This will delete any unsaved changes.')) {
+				document.querySelectorAll('#staffView input, #staffView textarea').forEach(field => {
+					field.value = '';
+				});
+				document.getElementById('saveStatus').textContent = 'Ready to Log';
+				document.getElementById('saveStatus').className = 'status-indicator status-ready';
+			}
+		}
 
         function logout() {
             if (confirm('Are you sure you want to logout? Any unsaved changes will be lost.')) {
