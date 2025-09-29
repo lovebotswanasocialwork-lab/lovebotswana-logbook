@@ -1069,35 +1069,75 @@
             const container = document.getElementById('myPastLogsList');
             container.innerHTML = '<div style="text-align: center; padding: 30px; color: #666;">Loading your past entries...</div>';
 
-            try {
-                const formData = new FormData();
-                formData.append('action', 'getMyLogs');
-                formData.append('staffName', currentUser);
-                formData.append('activityType', getRoleDisplayName(userRole));
+            // Try multiple methods to retrieve the user's logs
+            const methods = [
+                // Method 1: Try with just staff name (most likely to work)
+                { name: 'staffName only', data: { action: 'getMyLogs', staffName: currentUser, activityType: '' } },
+                // Method 2: Try with staff name and activity type
+                { name: 'staffName + activityType', data: { action: 'getMyLogs', staffName: currentUser, activityType: getRoleDisplayName(userRole) } },
+                // Method 3: Get all entries and filter client-side
+                { name: 'getAllEntries', data: { action: 'getAllEntries' } }
+            ];
 
-                const response = await fetch('https://script.google.com/macros/s/AKfycbxOBFd50VWteiHsATWTXIJv1q7aLWRZR0uku-zZgZfb-VwigCGVBzDy4Q9z49OLnvJDYg/exec', {
-                    method: 'POST',
-                    body: formData
-                });
+            for (const method of methods) {
+                try {
+                    const formData = new FormData();
+                    Object.keys(method.data).forEach(key => {
+                        formData.append(key, method.data[key]);
+                    });
 
-                const result = await response.json();
+                    const response = await fetch('https://script.google.com/macros/s/AKfycbxOBFd50VWteiHsATWTXIJv1q7aLWRZR0uku-zZgZfb-VwigCGVBzDy4Q9z49OLnvJDYg/exec', {
+                        method: 'POST',
+                        body: formData
+                    });
 
-                if (result.success && result.data) {
-                    window.myPastLogs = result.data;
-                    displayMyPastLogs(result.data);
-                } else {
-                    throw new Error(result.error || 'Failed to load data');
+                    const result = await response.json();
+
+                    if (result.success && result.data && Array.isArray(result.data)) {
+                        let userLogs = result.data;
+                        
+                        // If we got all entries, filter client-side for this user
+                        if (method.name === 'getAllEntries') {
+                            userLogs = result.data.filter(entry => {
+                                const entryStaff = (entry.staff || entry.staffName || '').trim().toLowerCase();
+                                const currentUserLower = currentUser.trim().toLowerCase();
+                                return entryStaff === currentUserLower;
+                            });
+                        }
+                        
+                        if (userLogs.length > 0) {
+                            window.myPastLogs = userLogs;
+                            displayMyPastLogs(userLogs);
+                            return; // Success! Exit the function
+                        }
+                    }
+                } catch (error) {
+                    console.log(`${method.name} failed: ${error.message}`);
                 }
-            } catch (error) {
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 30px; color: #666;">
-                        <p>Unable to load past logs automatically.</p>
-                        <p><strong>Debug Info:</strong> Searching for user "${currentUser}"</p>
-                        <p><strong>Alternative:</strong> <a href="https://docs.google.com/spreadsheets/d/${sheetsId}/edit" target="_blank">Click here to view your entries directly in Google Sheets</a></p>
-                        <p>Filter by your name: ${currentUser}</p>
-                    </div>
-                `;
             }
+
+            // If all methods failed, show helpful error message
+            container.innerHTML = `
+                <div style="text-align: center; padding: 30px; color: #666;">
+                    <div style="font-size: 1.5em; margin-bottom: 15px; opacity: 0.3;">📋</div>
+                    <h3 style="color: #dc3545; margin-bottom: 12px;">Unable to Load Past Logs</h3>
+                    <p style="margin-bottom: 8px;"><strong>Searching for:</strong> "${currentUser}"</p>
+                    <p style="font-size: 0.85em; margin-bottom: 15px;">This could mean:</p>
+                    <ul style="text-align: left; margin: 15px auto; max-width: 280px; font-size: 0.8em; line-height: 1.6;">
+                        <li>No entries found for this name</li>
+                        <li>Name spelling doesn't match Google Sheets exactly</li>
+                        <li>Google Apps Script connection issue</li>
+                    </ul>
+                    <div style="margin-top: 20px;">
+                        <button class="mobile-btn secondary" onclick="openGoogleSheets()" style="font-size: 0.8em; padding: 10px 15px;">
+                            View Google Sheets Directly
+                        </button>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.75em; color: #888;">
+                        Tip: Make sure your name in Google Sheets matches exactly: ${currentUser}
+                    </p>
+                </div>
+            `;
         }
 
         function displayMyPastLogs(logs) {
