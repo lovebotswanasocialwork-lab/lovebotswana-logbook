@@ -883,28 +883,26 @@
         }
 
         function login(event) {
-            event.preventDefault();
-            userRole = document.getElementById('userRole').value;
-            currentUser = document.getElementById('userName').value.trim();
-            
-            if (!userRole || !currentUser) {
-                alert('Please select your activity and enter your name.');
-                return;
-            }
+    event.preventDefault();
+    userRole = document.getElementById('userRole').value;
+    currentUser = document.getElementById('userName').value.trim();
+    
+    if (!userRole || !currentUser) {
+        alert('Please select your activity and enter your name.');
+        return;
+    }
 
-            document.getElementById('currentUser').textContent = `${currentUser}`;
-            document.getElementById('userInfo').style.display = 'flex';
-            document.getElementById('loginScreen').
-document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('dashboard').classList.add('active');
-            
-            if (userRole === 'admin') {
-                showAdminView();
-            } else {
-                showStaffView();
-            }
-        }
-
+    document.getElementById('currentUser').textContent = `${currentUser}`;
+    document.getElementById('userInfo').style.display = 'flex';
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').classList.add('active');
+    
+    if (userRole === 'admin') {
+        showAdminView();
+    } else {
+        showStaffView();
+    }
+}
         function getRoleDisplayName(role) {
             const roleNames = {
                 'admin': 'Administrator/Supervisor',
@@ -1424,7 +1422,7 @@ document.getElementById('loginScreen').style.display = 'none';
         function clearStaffForm() {
             if (confirm('Are you sure you want to clear all your log data? This will delete any unsaved changes.')) {
                 document.querySelectorAll('#staffView input, #staffView textarea').forEach(field => {
-                    field.value
+                    field.value = '';
 document.querySelectorAll('#staffView input, #staffView textarea').forEach(field => {
                     field.value = '';
                 });
