@@ -1017,6 +1017,7 @@
             saveStatus.className = 'status-indicator status-saving';
 
             const formData = new FormData();
+            formData.append('action', 'saveEntry');  // CRITICAL: Add the action parameter
             formData.append('date', currentDate);
             formData.append('time', new Date().toLocaleTimeString());
             formData.append('staffName', currentUser);
@@ -1041,10 +1042,16 @@
                     saveStatus.textContent = 'Saved to Google Sheets';
                     saveStatus.className = 'status-indicator status-saved';
                     alert('Your daily log has been saved to Google Sheets successfully!');
+                    
+                    // Clear drafts from sessionStorage after successful save
+                    ['staffActivities', 'staffOutcomes', 'staffChallenges', 'staffNotes', 'staffFollowUp'].forEach(id => {
+                        sessionStorage.removeItem(`draft_${id}`);
+                    });
                 } else {
                     throw new Error(result.error || 'Save failed');
                 }
             } catch (error) {
+                console.error('Save error:', error);
                 saveStatus.textContent = 'Auto-save failed - Manual copy required';
                 saveStatus.className = 'status-indicator status-error';
                 
@@ -1064,7 +1071,6 @@
                 }
             }
         }
-
         async function loadMyPastLogs() {
             const container = document.getElementById('myPastLogsList');
             container.innerHTML = '<div style="text-align: center; padding: 30px; color: #666;">Loading your past entries...</div>';
